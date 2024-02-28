@@ -42,8 +42,11 @@ If (Get application info:C1599.headless)
 						
 						Case of 
 							: (New collection:C1472(".xml"; ".4DSettings").includes(Path to object:C1547($path).extension))
-								$buildProject:=File:C1566($path; fk posix path:K87:1)
-								$buildProject:=$buildProject.exists ? $buildProject : File:C1566($path; fk platform path:K87:2)
+								If ($path#"")
+									$buildProject:=File:C1566($path; fk posix path:K87:1)
+									$buildProject:=$buildProject.exists ? $buildProject : File:C1566($path; fk platform path:K87:2)
+								End if 
+								$CLI.print("$path"+$path; "244").LF()
 							Else 
 								$buildDestinationPath:=$path
 						End case 
