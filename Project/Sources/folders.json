@@ -1,0 +1,46 @@
+{
+	"BuildApp": {
+		"methods": [
+			"run"
+		],
+		"classes": [
+			"_SettingsXmlParser",
+			"_XmlParser",
+			"BuildApp"
+		]
+	},
+	"CLI": {
+		"classes": [
+			"_CLI",
+			"BuildApp_CLI",
+			"SignApp"
+		]
+	},
+	"Console": {
+		"methods": [
+			"generic_error_handler"
+		],
+		"classes": [
+			"CLI"
+		]
+	},
+	"Controller": {
+		"classes": [
+			"_CLI_Controller",
+			"SignApp_Controller",
+			"SignAppUI_Controller"
+		]
+	},
+	"Tests": {
+		"methods": [
+			"TEST_build",
+			"TEST_build_cs_upgradable",
+			"TEST_build_hybrid",
+			"TEST_build_serialised",
+			"TEST_build_sign",
+			"TEST_sign_async",
+			"TEST_sign_sync"
+		]
+	},
+	"trash": {}
+}
