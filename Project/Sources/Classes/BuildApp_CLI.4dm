@@ -41,13 +41,7 @@ Function build($buildProject : 4D:C1709.File; $compileProject : 4D:C1709.File; $
 		End for each 
 	End if 
 	
-	var $platform; $Build___DestFolder : Text
-	
-	$platform:=(Is macOS:C1572 ? "Mac" : "Win")
-	
-	$Build___DestFolder:="Build"+$platform+"DestFolder"
-	
-	This:C1470._setDestination($BuildApp; $buildDestinationPath)
+	$BuildDestFolderPath:=This:C1470._setDestination($BuildApp; $buildDestinationPath)
 	
 	$targets:=New collection:C1472
 	
@@ -105,11 +99,9 @@ Function build($buildProject : 4D:C1709.File; $compileProject : 4D:C1709.File; $
 		Case of 
 			: ($target="Serialized") | ($target="Light")
 				
-				$BuildDestFolderPath:=$CLI._getStringValue($BuildApp; $Build___DestFolder)
-				
 				If ($BuildDestFolderPath#"")
 					
-					$BuildDestFolder:=Folder:C1567($BuildApp[$Build___DestFolder]; fk platform path:K87:2).folder("Final Application")
+					$BuildDestFolder:=Folder:C1567($BuildDestFolderPath; fk platform path:K87:2).folder("Final Application")
 					$BuildDestFolder.create()
 					
 					$CLI._printTask("Set destination folder")
@@ -154,8 +146,6 @@ Function build($buildProject : 4D:C1709.File; $compileProject : 4D:C1709.File; $
 				End if 
 				
 			: ($target="Server")
-				
-				$BuildDestFolderPath:=$CLI._getStringValue($BuildApp; $Build___DestFolder)
 				
 				If ($BuildDestFolderPath#"")
 					
@@ -209,8 +199,6 @@ Function build($buildProject : 4D:C1709.File; $compileProject : 4D:C1709.File; $
 				
 			: ($target="Compiled")
 				
-				$BuildDestFolderPath:=$CLI._getStringValue($BuildApp; $Build___DestFolder)
-				
 				If ($BuildDestFolderPath#"")
 					
 					$BuildDestFolder:=Folder:C1567($BuildDestFolderPath; fk platform path:K87:2).folder("Compiled Database")
@@ -246,8 +234,6 @@ Function build($buildProject : 4D:C1709.File; $compileProject : 4D:C1709.File; $
 				
 			: ($target="Component")
 				
-				$BuildDestFolderPath:=$CLI._getStringValue($BuildApp; $Build___DestFolder)
-				
 				If ($BuildDestFolderPath#"")
 					
 					$BuildDestFolder:=Folder:C1567($BuildDestFolderPath; fk platform path:K87:2).folder("Components")
@@ -278,8 +264,6 @@ Function build($buildProject : 4D:C1709.File; $compileProject : 4D:C1709.File; $
 				End if 
 				
 			: (($target="ClientMac") | ($target="ClientWin")) && (Not:C34($BuildCSUpgradeable))
-				
-				$BuildDestFolderPath:=$CLI._getStringValue($BuildApp; $Build___DestFolder)
 				
 				If ($BuildDestFolderPath#"")
 					
@@ -1382,22 +1366,29 @@ Function _resolvePath($POSIX : Text) : 4D:C1709.Folder
 	
 	return $cd
 	
-Function _setDestination($BuildApp : cs:C1710.BuildApp; $buildDestinationPath : Text)->$CLI : cs:C1710.BuildApp_CLI
+Function _setDestination($BuildApp : cs:C1710.BuildApp; $buildDestinationPath : Text)->$BuildDestFolderPath : Text
 	
 	$CLI:=This:C1470
 	
+	var $platform; $Build___DestFolder : Text
+	$platform:=(Is macOS:C1572 ? "Mac" : "Win")
+	$Build___DestFolder:="Build"+$platform+"DestFolder"
+	
 	If ($buildDestinationPath#"")
+		
 		$CLI.print("Set build destination path"; "177;bold").LF()
 		$BuildDestFolder:=$CLI._resolvePath($buildDestinationPath)
 		$BuildDestFolder.create()
 		
-		var $platform; $Build___DestFolder : Text
-		$platform:=(Is macOS:C1572 ? "Mac" : "Win")
-		$Build___DestFolder:="Build"+$platform+"DestFolder"
+		$BuildDestFolderPath:=$BuildDestFolder.platformPath
 		
-		$BuildApp:=cs:C1710.BuildApp.new($buildProject)
-		$BuildApp[$Build___DestFolder]:=$BuildDestFolder.platformPath
+		$BuildApp[$Build___DestFolder]:=$BuildDestFolderPath
 		$CLI.print($BuildDestFolder.path; "244").LF()
+		
+	Else 
+		
+		$BuildDestFolderPath:=$CLI._getStringValue($BuildApp; $Build___DestFolder)
+		
 	End if 
 	
 Function _updateProperty($BuildApp : cs:C1710.BuildApp; \
