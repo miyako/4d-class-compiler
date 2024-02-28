@@ -39,9 +39,8 @@ If (Get application info:C1599.headless)
 					$paths:=Split string:C1554($userParamValue; ","; sk trim spaces:K86:2 | sk ignore empty strings:K86:1)
 					
 					For each ($path; $paths)
-						$systemPath:=Path to object:C1547($path; Path is system:K24:25)
 						Case of 
-							: (New collection:C1472(".xml"; ".4DSettings").includes($systemPath.extension))
+							: (New collection:C1472(".xml"; ".4DSettings").includes(Path to object:C1547($path).extension))
 								If (Is Windows:C1573)
 									$buildProject:=File:C1566($path; fk platform path:K87:2)
 									$buildProject:=$buildProject.exists ? $buildProject : File:C1566($path; fk posix path:K87:1)

@@ -39,11 +39,21 @@ https://developer.4d.com/docs/Admin/cli/#tool4d
 				
 				Case of 
 					: (New collection:C1472(".xml"; ".4DSettings").includes(Path to object:C1547($path).extension))
-						$buildProject:=File:C1566($path; fk posix path:K87:1)
-						$buildProject:=$buildProject.exists ? $buildProject : File:C1566($path; fk platform path:K87:2)
+						If (Is Windows:C1573)
+							$buildProject:=File:C1566($path; fk platform path:K87:2)
+							$buildProject:=$buildProject.exists ? $buildProject : File:C1566($path; fk posix path:K87:1)
+						Else 
+							$buildProject:=File:C1566($path; fk posix path:K87:1)
+							$buildProject:=$buildProject.exists ? $buildProject : File:C1566($path; fk platform path:K87:2)
+						End if 
 					: (New collection:C1472(".json"; ".4DProject").includes(Path to object:C1547($path).extension))
-						$compileProject:=File:C1566($path; fk posix path:K87:1)
-						$compileProject:=$compileProject.exists ? $compileProject : File:C1566($path; fk platform path:K87:2)
+						If (Is Windows:C1573)
+							$compileProject:=File:C1566($path; fk platform path:K87:2)
+							$compileProject:=$compileProject.exists ? $compileProject : File:C1566($path; fk posix path:K87:1)
+						Else 
+							$compileProject:=File:C1566($path; fk posix path:K87:1)
+							$compileProject:=$compileProject.exists ? $compileProject : File:C1566($path; fk platform path:K87:2)
+						End if 
 					Else 
 						$buildDestinationPath:=$path
 				End case 
