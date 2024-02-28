@@ -43,6 +43,9 @@ Function build($buildProject : 4D:C1709.File; $compileProject : 4D:C1709.File; $
 	
 	$BuildDestFolderPath:=This:C1470._setDestination($BuildApp; $buildDestinationPath)
 	
+	var $platform : Text
+	$platform:=(Is macOS:C1572 ? "Mac" : "Win")
+	
 	$targets:=New collection:C1472
 	
 	If (Bool:C1537($BuildApp.SourcesFiles.RuntimeVL.RuntimeVLIncludeIt))
