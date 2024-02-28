@@ -14,7 +14,7 @@ tool4d compiler.4DProject --startup-method=build --user-param=.4DSettings,.4DPro
 in `--user-param`, pass up to 3 POSIX paths:
 
 |extension|content|
-|:-:|:-:|
+|:-|:-|
 |.xml or .4DSettings|build settings file|
 |.json or .4DProject|project file|
 |other|build destination path (relative path supported|
