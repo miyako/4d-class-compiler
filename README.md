@@ -8,25 +8,25 @@ Classes to compile, build, sign a project.
 # To build a project with tool4d
 
 ```
-tool4d compiler.4DProject --startup-method=build --user-param=.4DSettings,.4DProject,../build --dataless
+tool4d compiler.4DProject --startup-method=build --user-param=.4DSettings,.4DProject,../../build --dataless
 ```
 
 in `--user-param`, pass up to 3 POSIX paths:
 
 |extension|content|
-|:-:|:-:|
+|:-|:-|
 |.xml or .4DSettings|build settings file|
 |.json or .4DProject|project file|
 |other|build destination path (relative path supported|
 
-**Note**: When the build destination path is specified, the absolute path in the build settings file is ignored.
+**Note**: When the build destination path is specified, the absolute path in the build settings file is ignored. The path would typically be `../../folder` because the work folder is 2 levels up from the project file.
 
 in `--startup-method`, pass one of the following:
 
 * `build`: compile, build
 * `compile` 
 * `rebuild`: clean compiled code, compile, build
-* `sign`: run the **signapp.sh* script
+* `sign`: run the *signapp.sh* script
 
 # To build a project with 4D
 
