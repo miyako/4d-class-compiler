@@ -87,31 +87,38 @@ If (Get application info:C1599.headless)
 						
 						$CLI.print($originalBuildProject.path; "244").LF()
 						
-						var $buildLog : Text
-						$buildLog:=File:C1566(Build application log file:K5:46).getText("utf-8"; Document with CR:K24:21)
+						var $buildLogFile : 4D:C1709.File
+						$buildLogFile:=File:C1566(Build application log file:K5:46)
 						
-						$dom:=DOM Parse XML variable:C720($buildLog)
-						
-						var $stringValue : Text
-						
-						If (OK=1)
-							ARRAY TEXT:C222($MessageTypes; 0)
-							$MessageType:=DOM Find XML element:C864($dom; "/BuildApplicationLog/Log/MessageType[text()='Comment']"; $MessageTypes)
+						If ($buildLogFile#Null:C1517)
 							
-							For ($i; 1; Size of array:C274($MessageTypes))
-								$MessageType:=$MessageTypes{$i}
-								$Message:=DOM Find XML element:C864($MessageType; "../Message")
-								DOM GET XML ELEMENT VALUE:C731($Message; $stringValue)
-								$CLI.print($stringValue; "39").LF()
-								$CodeDesc:=DOM Find XML element:C864($MessageType; "../CodeDesc")
-								DOM GET XML ELEMENT VALUE:C731($CodeDesc; $stringValue)
-								$CLI.print($stringValue+" "; "244")
-								$CodeId:=DOM Find XML element:C864($MessageType; "../CodeId")
-								DOM GET XML ELEMENT VALUE:C731($CodeId; $stringValue)
-								$CLI.print("("+$stringValue+")"; "244").LF()
-							End for 
+							var $buildLogXml : Text
+							$buildLogXml:=$buildLogFile.getText("utf-8"; Document with CR:K24:21)
 							
-							DOM CLOSE XML:C722($dom)
+							$dom:=DOM Parse XML variable:C720($buildLogXml)
+							
+							var $stringValue : Text
+							
+							If (OK=1)
+								ARRAY TEXT:C222($MessageTypes; 0)
+								$MessageType:=DOM Find XML element:C864($dom; "/BuildApplicationLog/Log/MessageType[text()='Comment']"; $MessageTypes)
+								
+								For ($i; 1; Size of array:C274($MessageTypes))
+									$MessageType:=$MessageTypes{$i}
+									$Message:=DOM Find XML element:C864($MessageType; "../Message")
+									DOM GET XML ELEMENT VALUE:C731($Message; $stringValue)
+									$CLI.print($stringValue; "39").LF()
+									$CodeDesc:=DOM Find XML element:C864($MessageType; "../CodeDesc")
+									DOM GET XML ELEMENT VALUE:C731($CodeDesc; $stringValue)
+									$CLI.print($stringValue+" "; "244")
+									$CodeId:=DOM Find XML element:C864($MessageType; "../CodeId")
+									DOM GET XML ELEMENT VALUE:C731($CodeId; $stringValue)
+									$CLI.print("("+$stringValue+")"; "244").LF()
+								End for 
+								
+								DOM CLOSE XML:C722($dom)
+							End if 
+							
 						End if 
 						
 					End if 
