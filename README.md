@@ -8,10 +8,25 @@ Classes to compile, build, sign a project.
 # To build a project with tool4d
 
 ```
-tool4d compiler.4DProject --startup-method=build --user-param=.4DSettings,.4DProject --dataless
+tool4d compiler.4DProject --startup-method=build --user-param=.4DSettings,.4DProject,../build --dataless
 ```
 
-other startup methods: `compile` `rebuild` `sign`
+in `--user-param`, pass up to 3 POSIX paths:
+
+|extension|content|
+|:-:|:-:|
+|.xml or .4DSettings|build settings file|
+|.json or .4DProject|project file|
+|other|build destination path (relative path supported|
+
+**Note**: When the build destination path is specified, the absolute path in the build settings file is ignored.
+
+in `--startup-method`, pass one of the following:
+
+* `build`: compile, build
+* `compile` 
+* `rebuild`: clean compiled code, compile, build
+* `sign`: run the **signapp.sh* script
 
 # To build a project with 4D
 
@@ -26,11 +41,7 @@ $CLI.compile($compileProject)
 $CLI.build($buildProject; $compileProject)
 ```
 
-# Note
+# Packaging
 
 * Do not zip *4D.entitlements* or *SignApp.sh* on Windows. `codesign` will fail.
 * *SignApp.sh* does not seem to work when a self hosted runner is launched as a service (requires invenstigation)
-
-# Change log
-
-* `1.0.0`: added `localbuild` start method to build in place (ignore destination path in build project)
