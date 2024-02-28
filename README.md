@@ -26,7 +26,7 @@ in `--startup-method`, pass one of the following:
 * `build`: compile, build
 * `compile` 
 * `rebuild`: clean compiled code, compile, build
-* `sign`: run the **signapp.sh* script
+* `sign`: run the *signapp.sh* script
 
 # To build a project with 4D
 
