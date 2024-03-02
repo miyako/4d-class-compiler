@@ -1937,7 +1937,7 @@ Function _zipCallback1($progress : Integer)
 	
 	$value+="%%"
 	
-	$CLI.CR().print("Archive client"; "bold").print("...").print($value; "226")
+	$CLI.CR().print("Archive client"; "bold").print("...").print($value; "226").EL()
 	
 Function _zipCallback2($progress : Integer)
 	
@@ -1948,5 +1948,5 @@ Function _zipCallback2($progress : Integer)
 	
 	$value+="%%"
 	
-	$CLI.CR().print("Archive project folder"; "bold").print($value; "226")
+	$CLI.CR().print("Archive project folder"; "bold").print($value; "226").EL()
 	
