@@ -1,6 +1,25 @@
 Class extends CLI
 
-Function build($buildProject : 4D:C1709.File; $compileProject : 4D:C1709.File; $buildDestinationPath : Text)->$CLI : cs:C1710.BuildApp_CLI
+Function buildComponent($compileProject : 4D:C1709.File; $buildDestinationPath : Text)->$CLI : cs:C1710.BuildApp_CLI
+	
+	var $BuildApp : cs:C1710.BuildApp
+	$BuildApp:=cs:C1710.BuildApp.new()
+	
+	$BuildApp.PackProject:=True:C214
+	$BuildApp.BuildComponent:=True:C214
+	
+	$tempFolder:=Folder:C1567(Temporary folder:C486; fk platform path:K87:2).folder(Generate UUID:C1066)
+	$tempFolder.create()
+	
+	var $buildProject : 4D:C1709.File
+	$buildProject:=$tempFolder.file("buildApp.4DSettings")
+	$BuildApp.toFile($buildProject)
+	
+	This:C1470.build($buildProject; $compileProject; $buildDestinationPath; True:C214)
+	
+	return This:C1470
+	
+Function build($buildProject : 4D:C1709.File; $compileProject : 4D:C1709.File; $buildDestinationPath : Text; $noSign : Boolean)->$CLI : cs:C1710.BuildApp_CLI
 	
 	$CLI:=This:C1470
 	
@@ -260,7 +279,11 @@ Function build($buildProject : 4D:C1709.File; $compileProject : 4D:C1709.File; $
 					
 					$CLI._copyDatabase($BuildApp; $targetPackage; $compileProject; $BuildApplicationName; $publication_name; $target)
 					
-					$CLI.quickSign($BuildApp; $targetPackage)
+					If ($noSign)
+						//sign in workflow
+					Else 
+						$CLI.quickSign($BuildApp; $targetPackage)
+					End if 
 					
 					$success:=True:C214
 					

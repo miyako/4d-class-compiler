@@ -69,6 +69,10 @@ https://developer.4d.com/docs/Admin/cli/#tool4d
 					$CLI.compile($compileProject)
 				End if 
 				
+				If ($options.includes("build-component"))
+					$CLI.buildComponent($compileProject; $buildDestinationPath)
+				End if 
+				
 				If ($options.includes("build"))
 					$CLI.build($buildProject; $compileProject; $buildDestinationPath)
 				End if 

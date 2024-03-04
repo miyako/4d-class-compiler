@@ -1,2 +1,2 @@
 //%attributes = {"invisible":true}
-run("compile,component")
+run("compile,build-component")
