@@ -7,6 +7,7 @@ Function buildComponent($compileProject : 4D:C1709.File; $buildDestinationPath :
 	
 	$BuildApp.PackProject:=True:C214
 	$BuildApp.BuildComponent:=True:C214
+	$BuildApp.BuildApplicationName:=$compileProject.parent.parent.name
 	
 	$tempFolder:=Folder:C1567(Temporary folder:C486; fk platform path:K87:2).folder(Generate UUID:C1066)
 	$tempFolder.create()
