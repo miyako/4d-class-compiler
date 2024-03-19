@@ -1374,26 +1374,7 @@ Function _printTask($task : Text)->$CLI : cs:C1710.BuildApp_CLI
 	
 	$CLI.print($task; "bold").print("...")
 	
-Function _resolvePath($POSIX : Text) : 4D:C1709.Folder
-	
-	var $cd : 4D:C1709.Folder
-	$cd:=Folder:C1567(Folder:C1567("/PROJECT/").platformPath; fk platform path:K87:2)
-	
-	var $pathComponent : Text
-	For each ($pathComponent; Split string:C1554($POSIX; "/"; sk ignore empty strings:K86:1))
-		Case of 
-			: ($pathComponent=".")
-				
-			: ($pathComponent="..")
-				$cd:=$cd.parent
-			Else 
-				$cd:=$cd.folder($pathComponent)
-		End case 
-	End for each 
-	
-	return $cd
-	
-Function _setDestination($BuildApp : cs:C1710.BuildApp; $buildDestinationPath : Text)->$BuildDestFolderPath : Text
+Function _setDestination($BuildApp : cs:C1710.BuildApp; $path : Text)->$BuildDestFolderPath : Text
 	
 	$CLI:=This:C1470
 	
@@ -1401,22 +1382,19 @@ Function _setDestination($BuildApp : cs:C1710.BuildApp; $buildDestinationPath : 
 	$platform:=(Is macOS:C1572 ? "Mac" : "Win")
 	$Build___DestFolder:="Build"+$platform+"DestFolder"
 	
-	If ($buildDestinationPath#"")
-		
-		$CLI.print("Set build destination path"; "177;bold").LF()
-		$BuildDestFolder:=$CLI._resolvePath($buildDestinationPath)
-		$BuildDestFolder.create()
-		
-		$BuildDestFolderPath:=$BuildDestFolder.platformPath
-		
-		$BuildApp[$Build___DestFolder]:=$BuildDestFolderPath
-		$CLI.print($BuildDestFolder.path; "244").LF()
-		
+	If ($path#"")
+		$BuildDestFolderPath:=Folder:C1567($path; fk posix path:K87:1).platformPath
 	Else 
-		
 		$BuildDestFolderPath:=$CLI._getStringValue($BuildApp; $Build___DestFolder)
-		
 	End if 
+	
+	$CLI.print("Set build destination path"; "177;bold").LF()
+	
+	$BuildDestFolder:=Folder:C1567($BuildDestFolderPath; fk platform path:K87:2)
+	$BuildDestFolder.create()
+	
+	$BuildApp[$Build___DestFolder]:=$BuildDestFolderPath
+	$CLI.print($BuildDestFolder.path; "244").LF()
 	
 Function _updateProperty($BuildApp : cs:C1710.BuildApp; \
 $targetRuntimeFolder : 4D:C1709.Folder; \
