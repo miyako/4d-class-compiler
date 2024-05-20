@@ -1554,8 +1554,8 @@ $sdi_application : Boolean; $publication_name : Text; $buildApplicationType : Te
 			$info["com.4D.BuildApp.ServerSelectionAllowed"]:=$ServerSelectionAllowed ? "true" : "false"
 			$keys.push("com.4D.BuildApp.ServerSelectionAllowed")
 			
-			$ClientWinSingleInstance:=$CLI._getBoolValue($BuildApp; "CS.ClientWinSingleInstance")
-			$info["4D_MultipleClient"]:=$ClientWinSingleInstance ? "1" : "0"
+			$ClientUserPreferencesFolderByPa:=$CLI._getBoolValue($BuildApp; "CS.ClientUserPreferencesFolderByPath")
+			$info["4D_MultipleClient"]:=$ClientUserPreferencesFolderByPa ? "1" : "0"
 			$keys.push("4D_MultipleClient")
 			
 			$ShareLocalResourcesOnClient:=$CLI._getBoolValue($BuildApp; "CS.ShareLocalResourcesOnWindowsClient")
