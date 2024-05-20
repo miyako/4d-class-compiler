@@ -17,7 +17,7 @@ in `--user-param`, pass up to 3 POSIX paths:
 |:-|:-|
 |.xml or .4DSettings|build settings file|
 |.json or .4DProject|project file|
-|other|build destination path (relative path supported|
+|other|build destination path (relative path supported)|
 
 **Note**: When the build destination path is specified, the absolute path in the build settings file is ignored. The path would typically be `../../folder` because the work folder is 2 levels up from the project file.
 
