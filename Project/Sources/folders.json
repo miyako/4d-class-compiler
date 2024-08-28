@@ -33,12 +33,8 @@
 	},
 	"Tests": {
 		"methods": [
-			"TEST_build",
-			"TEST_build_cs_upgradable",
-			"TEST_build_hybrid",
-			"TEST_build_serialised",
-			"TEST_build_sign",
-			"TEST_build_with_data",
+			"TEST_build_desktop",
+			"TEST_build_server",
 			"TEST_sign_async",
 			"TEST_sign_sync"
 		]
