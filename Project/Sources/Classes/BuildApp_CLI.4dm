@@ -37,7 +37,7 @@ Function build($buildProject : 4D:C1709.File; $compileProject : 4D:C1709.File; $
 	If ($BuildApplicationName#"")
 		$BuildApplicationName:=$BuildApp.BuildApplicationName
 	Else 
-		$BuildApplicationName:=$compileProject.name
+		$BuildApplicationName:=$compileProject.name  //BUILD APPLICATION adds the extension too
 	End if 
 	
 	$CLI._printTask("Set application name")
@@ -1792,6 +1792,10 @@ $sdi_application : Boolean; $publication_name : Text; $buildApplicationType : Te
 			$winInfo.LegalCopyright:=$Copyright
 			$keys.push("LegalCopyright")
 		End if 
+	End if 
+	
+	If ($BuildApp.DataFilePath#"")
+		$info.BuildDataPath:=$BuildApp.DataFilePath
 	End if 
 	
 	If ($Creator#"")

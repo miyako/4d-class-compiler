@@ -69,7 +69,7 @@ For ($i; 1; Size of array:C274($codes))
 	$CLI\
 		.print("error")\
 		.print(": ")\
-		.print($codes{$i})\
+		.print(String:C10($codes{$i}))\
 		.LF()
 	$CLI\
 		.print("component")\

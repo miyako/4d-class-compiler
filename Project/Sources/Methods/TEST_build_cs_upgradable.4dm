@@ -46,8 +46,9 @@ If (True:C214)
 	
 	$BuildApp.CS.ServerStructureFolderName:="GEORGIA"
 	$BuildApp.CS.ClientServerSystemFolderName:="ATLANTA"
-	
+	//%W-550.12
 	$BuildApp.findCertificates("name == :1 and kind == :2"; "@miyako@"; "Developer ID Application")
+	//%W+550.12
 	$BuildApp.SignApplication.MacSignature:=True:C214
 	$BuildApp.AdHocSign:=False:C215
 	

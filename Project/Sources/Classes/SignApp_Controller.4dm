@@ -38,9 +38,9 @@ Function execute($command : Variant; $logFile : 4D:C1709.File)
 		
 		If (This:C1470._worker=Null:C1517)
 			This:C1470._onResponse:=This:C1470.onResponse
-			This:C1470.onResponse:=This:C1470._onExecute
+			This:C1470["onResponse"]:=This:C1470._onExecute
 			This:C1470._onTerminate:=This:C1470.onTerminate
-			This:C1470.onTerminate:=This:C1470._onComplete
+			This:C1470["onTerminate"]:=This:C1470._onComplete
 			This:C1470._execute()
 		End if 
 		

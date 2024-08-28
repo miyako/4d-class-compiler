@@ -50,8 +50,9 @@ If (True:C214)
 	
 	//$BuildApp.CS.MacCompiledDatabaseToWinIncludeIt:=True
 	//$BuildApp.CS.MacCompiledDatabaseToWin:=File(Structure file; fk platform path).parent.parent.parent.folder("Compiled Database/example").platformPath
-	
+	//%W-550.12
 	$BuildApp.findCertificates("name == :1 and kind == :2"; "@miyako@"; "Developer ID Application")
+	//%W+550.12
 	$BuildApp.SignApplication.MacSignature:=True:C214
 	$BuildApp.AdHocSign:=False:C215
 	

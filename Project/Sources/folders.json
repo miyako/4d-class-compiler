@@ -38,6 +38,7 @@
 			"TEST_build_hybrid",
 			"TEST_build_serialised",
 			"TEST_build_sign",
+			"TEST_build_with_data",
 			"TEST_sign_async",
 			"TEST_sign_sync"
 		]

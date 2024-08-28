@@ -37,8 +37,9 @@ If (True:C214)
 	$BuildApp.SourcesFiles.RuntimeVL[$RuntimeVLIconFolder]:=$platformIcon
 	
 	$BuildApp.PackProject:=True:C214
-	
+	//%W-550.12
 	$BuildApp.findCertificates("name == :1 and kind == :2"; "@miyako@"; "Developer ID Application")
+	//%W+550.12
 	$BuildApp.SignApplication.MacSignature:=True:C214
 	$BuildApp.AdHocSign:=False:C215
 	
