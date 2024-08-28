@@ -44,4 +44,4 @@ $CLI.build($buildProject; $compileProject)
 # Packaging
 
 * Do not zip *4D.entitlements* or *SignApp.sh* on Windows. `codesign` will fail.
-* *SignApp.sh* does not seem to work when a self hosted runner is launched as a service (requires invenstigation)
+* *SignApp.sh* does not seem to work when a self hosted runner is launched as a service (requires investigation)
