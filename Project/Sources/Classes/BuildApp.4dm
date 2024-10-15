@@ -19,22 +19,28 @@ Function get settings()->$settings : Object
 	
 Function findComponents($compileProject : 4D:C1709.File; $asFiles : Boolean)->$components : Collection
 	
+	var $projectComponentsFolder : 4D:C1709.Folder
 	$projectComponentsFolder:=$compileProject.parent.parent.folder("Components")
 	
-	If (Is macOS:C1572)
-		$applicationComponentsFolder:=Folder:C1567(Application file:C491; fk platform path:K87:2).folder("Contents").folder("Components")
+	If ($projectComponentsFolder#Null:C1517)
+		If (Is macOS:C1572)
+			$applicationComponentsFolder:=Folder:C1567(Application file:C491; fk platform path:K87:2).folder("Contents").folder("Components")
+		Else 
+			$applicationComponentsFolder:=Folder:C1567(Application file:C491; fk platform path:K87:2).parent.folder("Components")
+		End if 
+		
+		$projectComponentFolders:=$projectComponentsFolder.folders(fk ignore invisible:K87:22).query("extension in :1"; New collection:C1472(".4dbase"))
+		$projectComponentFiles:=$projectComponentsFolder.files(fk ignore invisible:K87:22).query("extension in :1"; New collection:C1472(".4DC"; ".4DZ"))
+		
+		$applicationComponentFolders:=$applicationComponentsFolder.folders(fk ignore invisible:K87:22).query("extension in :1"; New collection:C1472(".4dbase"))
+		$applicationComponentFiles:=$applicationComponentsFolder.files(fk ignore invisible:K87:22).query("extension in :1"; New collection:C1472(".4DC"; ".4DZ"))
+		
+		$folders:=$projectComponentFolders
+		$files:=$projectComponentFiles
 	Else 
-		$applicationComponentsFolder:=Folder:C1567(Application file:C491; fk platform path:K87:2).parent.folder("Components")
+		$folders:=[]
+		$files:=[]
 	End if 
-	
-	$projectComponentFolders:=$projectComponentsFolder.folders(fk ignore invisible:K87:22).query("extension in :1"; New collection:C1472(".4dbase"))
-	$projectComponentFiles:=$projectComponentsFolder.files(fk ignore invisible:K87:22).query("extension in :1"; New collection:C1472(".4DC"; ".4DZ"))
-	
-	$applicationComponentFolders:=$applicationComponentsFolder.folders(fk ignore invisible:K87:22).query("extension in :1"; New collection:C1472(".4dbase"))
-	$applicationComponentFiles:=$applicationComponentsFolder.files(fk ignore invisible:K87:22).query("extension in :1"; New collection:C1472(".4DC"; ".4DZ"))
-	
-	$folders:=$projectComponentFolders
-	$files:=$projectComponentFiles
 	
 	$names:=$folders.extract("name").combine($files.extract("name"))
 	
@@ -217,7 +223,7 @@ Function findPluginsFolder($compileProject : 4D:C1709.File)->$plugins : 4D:C1709
 	
 	var $PluginsFolder : 4D:C1709.Folder
 	$PluginsFolder:=$compileProject.parent.parent.folder("Plugins")
-	If ($PluginsFolder.exists)
+	If ($PluginsFolder#Null:C1517) && ($PluginsFolder.exists)
 		$plugins:=$PluginsFolder
 	End if 
 	
