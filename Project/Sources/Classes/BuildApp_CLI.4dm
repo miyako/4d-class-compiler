@@ -683,6 +683,11 @@ $sourceProjectFile : 4D:C1709.File; $BuildApplicationName : Text; $publication_n
 						$file.delete()
 					End for each 
 					
+					$dependenciesFile:=$targetProjectFolder.folder("Sources").file("dependencies.json")
+					If ($dependenciesFile.exists)
+						$dependenciesFile.delete()
+					End if 
+					
 					$Forms:=$folders.pop()
 					
 					For each ($folder; $folders)
