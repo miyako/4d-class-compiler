@@ -55,7 +55,7 @@ Function _sign($application : 4D:C1709.Folder; $useLog : Boolean; $certificateNa
 			
 		End if 
 		
-		This:C1470.controller.execute($command; $logFile)
+		This:C1470.controller.execute($command)
 		
 	End if 
 	
