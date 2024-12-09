@@ -29,8 +29,10 @@
 	<key>com.apple.security.personal-information.photos-library</key>
 	<true/>
 	<key>com.apple.security.smartcard</key>
-	<true/>	
+	<true/>
 	<key>com.apple.security.get-task-allow</key>
-	<true/>		
+	<true/>
+	<key>com.apple.developer.contacts.notes</key>
+	<true/>
 </dict>
 </plist>
