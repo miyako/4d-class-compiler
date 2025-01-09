@@ -1429,6 +1429,7 @@ $sdi_application : Boolean; $publication_name : Text; $buildApplicationType : Te
 	
 	$info["BuildHardLink"]:=""
 	$info["com.4D.BuildApp.ReadOnlyApp"]:="true"
+	$info["com.4D.HidePackageManagerMenuItem"]:="true"
 	$keys.push("BuildHardLink")
 	$keys.push("com.4D.BuildApp.ReadOnlyApp")
 	
