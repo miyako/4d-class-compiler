@@ -1471,7 +1471,8 @@ $sdi_application : Boolean; $publication_name : Text; $buildApplicationType : Te
 		$info.NSNetworkVolumesUsageDescription:=""
 		$info.NSRemovableVolumesUsageDescription:=""
 		$info.NSAppleEventsUsageDescription:=""
-		$info.NSCalendarsUsageDescription:=""
+		//$info.NSCalendarsUsageDescription:=""
+		$info.NSCalendarsFullAccessUsageDescription:=""
 		$info.NSCameraUsageDescription:=""
 		$info.NSContactsUsageDescription:=""
 		$info.NSLocationUsageDescription:=""
@@ -1479,20 +1480,23 @@ $sdi_application : Boolean; $publication_name : Text; $buildApplicationType : Te
 		$info.NSPhotoLibraryUsageDescription:=""
 		$info.NSRemindersUsageDescription:=""
 		$info.NSMicrophoneUsageDescription:=""
-		$keys.push("NSAppleEventsUsageDescription")
-		$keys.push("NSCalendarsUsageDescription")
-		$keys.push("NSCameraUsageDescription")
-		$keys.push("NSContactsUsageDescription")
-		$keys.push("NSLocationUsageDescription")
-		$keys.push("NSMicrophoneUsageDescription")
-		$keys.push("NSPhotoLibraryUsageDescription")
-		$keys.push("NSRemindersUsageDescription")
-		$keys.push("NSSystemAdministrationUsageDescription")
+		$info.NSLocalNetworkUsageDescription:=""
 		$keys.push("NSDesktopFolderUsageDescription")
 		$keys.push("NSDocumentsFolderUsageDescription")
 		$keys.push("NSDownloadsFolderUsageDescription")
 		$keys.push("NSNetworkVolumesUsageDescription")
 		$keys.push("NSRemovableVolumesUsageDescription")
+		$keys.push("NSAppleEventsUsageDescription")
+		//$keys.push("NSCalendarsUsageDescription")
+		$keys.push("NSCalendarsFullAccessUsageDescription")
+		$keys.push("NSCameraUsageDescription")
+		$keys.push("NSContactsUsageDescription")
+		$keys.push("NSLocationUsageDescription")
+		$keys.push("NSSystemAdministrationUsageDescription")
+		$keys.push("NSPhotoLibraryUsageDescription")
+		$keys.push("NSRemindersUsageDescription")
+		$keys.push("NSMicrophoneUsageDescription")
+		$keys.push("NSLocalNetworkUsageDescription")
 	End if 
 	
 	Case of 
