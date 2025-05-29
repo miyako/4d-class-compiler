@@ -927,6 +927,24 @@ $sdi_application : Boolean; $publication_name : Text; $buildApplicationType : Te
 			$CLI._printPath($targetExecutableFile)
 		End if 
 		
+		If (Is macOS:C1572)
+			var $build : Integer
+			$version:=Application version:C493($build)
+			
+			If ($version>="2090")
+				var $info : Object
+				$info:=$targetExecutableFile.getAppInfo()
+				var $arch : Object
+				For each ($arch; $info.archs)
+					$arch.uuid:=Generate UUID:C1066
+					$CLI._printTask("Set new UUID for architecture "+$arch.name)
+					$CLI._printItem($arch.uuid)
+					$CLI._printPath($targetExecutableFile)
+				End for each 
+				$targetExecutableFile.setAppInfo($info)
+			End if 
+		End if 
+		
 		If ($buildApplicationType="Client@") && ($BuildCSUpgradeable)
 			//keep it
 		Else 
