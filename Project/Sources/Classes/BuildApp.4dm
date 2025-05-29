@@ -276,6 +276,8 @@ Function parseFile($settingsFile : 4D:C1709.File)->$BuildApp : cs:C1710.BuildApp
 		"RuntimeVL"; New object:C1471("StartElevated"; False:C215))
 	
 	$_BuildApp.CS:=New object:C1471(\
+		"CertificateAuthoritiesCertificates"; False:C215; \
+		"CertificateDomainName"; False:C215; \
 		"BuildServerApplication"; False:C215; \
 		"BuildCSUpgradeable"; False:C215; \
 		"BuildV13ClientUpgrades"; False:C215; \
@@ -688,6 +690,20 @@ Function parseFile($settingsFile : 4D:C1709.File)->$BuildApp : cs:C1710.BuildApp
 				If (OK=1)
 					DOM GET XML ELEMENT VALUE:C731($HardLink; $stringValue)
 					$_BuildApp.CS.HardLink:=$stringValue
+				End if 
+				
+				$CertificateDomainName:=DOM Find XML element:C864($dom; "/Preferences4D/BuildApp/CS/CertificateDomainName")
+				
+				If (OK=1)
+					DOM GET XML ELEMENT VALUE:C731($CertificateDomainName; $stringValue)
+					$_BuildApp.CS.CertificateDomainName:=$stringValue
+				End if 
+				
+				$CertificateAuthoritiesCertifica:=DOM Find XML element:C864($dom; "/Preferences4D/BuildApp/CS/CertificateAuthoritiesCertificates")
+				
+				If (OK=1)
+					DOM GET XML ELEMENT VALUE:C731($CertificateAuthoritiesCertifica; $stringValue)
+					$_BuildApp.CS.CertificateAuthoritiesCertificates:=$stringValue
 				End if 
 				
 				$BuildV13ClientUpgrades:=DOM Find XML element:C864($dom; "/Preferences4D/BuildApp/CS/BuildV13ClientUpgrades")

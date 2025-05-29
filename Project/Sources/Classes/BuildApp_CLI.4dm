@@ -1607,6 +1607,24 @@ $sdi_application : Boolean; $publication_name : Text; $buildApplicationType : Te
 	$info["CurrentVers"]:=String:C10($CurrentVers)
 	$keys.push("CurrentVers")
 	
+	If ($buildApplicationType="Client@") || ($buildApplicationType="Server")
+		
+		$CertificateDomainName:=$CLI._getStringValue($BuildApp; "CS.CertificateDomainName")
+		
+		If ($CertificateDomainName#"")
+			$info["CertificateDomainName"]:=$CertificateDomainName
+			$keys.push("CertificateDomainName")
+		End if 
+		
+		$CertificateAuthoritiesCertifica:=$CLI._getStringValue($BuildApp; "CS.CertificateAuthoritiesCertificates")
+		
+		If ($CertificateAuthoritiesCertifica#"")
+			$info["CertificateAuthoritiesCertificates"]:=$CertificateAuthoritiesCertifica
+			$keys.push("CertificateAuthoritiesCertificates")
+		End if 
+		
+	End if 
+	
 	Case of 
 		: ($buildApplicationType="Client@")
 			
