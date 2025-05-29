@@ -1,5 +1,8 @@
 Class extends CLI
 
+property licenseKey : Text
+property licenseFile : 4D:C1709.File
+
 Function buildComponent($compileProject : 4D:C1709.File; $buildDestinationPath : Text)->$CLI : cs:C1710.BuildApp_CLI
 	
 	var $BuildApp : cs:C1710.BuildApp
@@ -152,6 +155,10 @@ Function build($buildProject : 4D:C1709.File; $compileProject : 4D:C1709.File; $
 								
 								$targetRuntimeVLFolder:=$CLI._copyRuntime($BuildApp; $RuntimeVLFolder; $BuildDestFolder; $compileProject; $BuildApplicationName; $sdi_application; $publication_name)
 								
+								If ($target="Serialized")
+									$CLI._generateLicense($BuildApp; $targetRuntimeVLFolder; $target)
+								End if 
+								
 								$CLI._copyPlugins($BuildApp; $targetRuntimeVLFolder; $compileProject; $target)
 								
 								$CLI._copyComponents($BuildApp; $targetRuntimeVLFolder; $compileProject; $target)
@@ -159,10 +166,6 @@ Function build($buildProject : 4D:C1709.File; $compileProject : 4D:C1709.File; $
 								$CLI._updateProperty($BuildApp; $targetRuntimeVLFolder; $CompanyName; $BuildApplicationName; $sdi_application; $publication_name)
 								
 								$CLI._copyDatabase($BuildApp; $targetRuntimeVLFolder; $compileProject; $BuildApplicationName; $publication_name; $target)
-								
-								If ($target="Serialized")
-									$CLI._generateLicense($BuildApp; $targetRuntimeVLFolder; $target)
-								End if 
 								
 								$CLI.quickSign($BuildApp; $targetRuntimeVLFolder)
 								
@@ -200,6 +203,12 @@ Function build($buildProject : 4D:C1709.File; $compileProject : 4D:C1709.File; $
 								
 								$targetServerFolder:=$CLI._copyRuntime($BuildApp; $ServerFolder; $BuildDestFolder; $compileProject; $BuildApplicationName; $sdi_application; $publication_name; $target)
 								
+								$IsOEM:=$CLI._getBoolValue($BuildApp; "SourcesFiles.CS.IsOEM")
+								
+								If ($IsOEM)
+									$CLI._generateLicense($BuildApp; $targetServerFolder; $target)
+								End if 
+								
 								$CLI._copyPlugins($BuildApp; $targetServerFolder; $compileProject; $target)
 								
 								$CLI._copyComponents($BuildApp; $targetServerFolder; $compileProject; $target)
@@ -207,12 +216,6 @@ Function build($buildProject : 4D:C1709.File; $compileProject : 4D:C1709.File; $
 								$CLI._updateProperty($BuildApp; $targetServerFolder; $CompanyName; $BuildApplicationName; $sdi_application; $publication_name; $target)
 								
 								$CLI._copyDatabase($BuildApp; $targetServerFolder; $compileProject; $BuildApplicationName; $publication_name; $target)
-								
-								$IsOEM:=$CLI._getBoolValue($BuildApp; "SourcesFiles.CS.IsOEM")
-								
-								If ($IsOEM)
-									$CLI._generateLicense($BuildApp; $targetServerFolder; $target)
-								End if 
 								
 								$CLI.quickSign($BuildApp; $targetServerFolder)
 								
@@ -326,15 +329,15 @@ Function build($buildProject : 4D:C1709.File; $compileProject : 4D:C1709.File; $
 								
 								$targetClientFolder:=$CLI._copyRuntime($BuildApp; $ClientFolder; $BuildDestFolder; $compileProject; $BuildApplicationName; $sdi_application; $publication_name; $target)
 								
-								$CLI._updateProperty($BuildApp; $targetClientFolder; $CompanyName; $BuildApplicationName; $sdi_application; $publication_name; $target)
-								
-								$CLI._copyDatabase($BuildApp; $targetClientFolder; $compileProject; $BuildApplicationName; $publication_name; $target)
-								
 								$IsOEM:=$CLI._getBoolValue($BuildApp; "SourcesFiles.CS.IsOEM")
 								
 								If ($IsOEM)
 									$CLI._generateLicense($BuildApp; $targetClientFolder; $target)
 								End if 
+								
+								$CLI._updateProperty($BuildApp; $targetClientFolder; $CompanyName; $BuildApplicationName; $sdi_application; $publication_name; $target)
+								
+								$CLI._copyDatabase($BuildApp; $targetClientFolder; $compileProject; $BuildApplicationName; $publication_name; $target)
 								
 								$CLI.quickSign($BuildApp; $targetClientFolder)
 								
@@ -1047,15 +1050,15 @@ $sdi_application : Boolean; $publication_name : Text; $buildApplicationType : Te
 				
 				$target:="Client"+(Is macOS:C1572 ? "Mac" : "Win")
 				
-				$CLI._updateProperty($BuildApp; $targetFolder; $CompanyName; $BuildApplicationName; $sdi_application; $publication_name; $target)
-				
-				$CLI._copyDatabase($BuildApp; $targetFolder; $compileProject; $BuildApplicationName; $publication_name; $buildApplicationType)
-				
 				$IsOEM:=$CLI._getBoolValue($BuildApp; "SourcesFiles.CS.IsOEM")
 				
 				If ($IsOEM)
 					$CLI._generateLicense($BuildApp; $targetFolder; $target)
 				End if 
+				
+				$CLI._updateProperty($BuildApp; $targetFolder; $CompanyName; $BuildApplicationName; $sdi_application; $publication_name; $target)
+				
+				$CLI._copyDatabase($BuildApp; $targetFolder; $compileProject; $BuildApplicationName; $publication_name; $buildApplicationType)
 				
 				$CLI.quickSign($BuildApp; $targetFolder)
 				
@@ -1206,6 +1209,8 @@ Function _generateLicense($BuildApp : cs:C1710.BuildApp; $targetFolder : 4D:C170
 	
 	$CLI:=This:C1470
 	
+	$EvaluationMode:=$CLI._getBoolValue($BuildApp; "Licenses.EvaluationMode")
+	
 	var $platform; $ArrayLicense___ : Text
 	
 	$platform:=(Is macOS:C1572 ? "Mac" : "Win")
@@ -1231,6 +1236,7 @@ Function _generateLicense($BuildApp : cs:C1710.BuildApp; $targetFolder : 4D:C170
 	$UOSs:=$licenses.filter(Formula:C1597($1.result:=Path to object:C1547($1.value).name="@4UOS@"))
 	$DOMs:=$licenses.filter(Formula:C1597($1.result:=Path to object:C1547($1.value).name="@4DOM@"))
 	$DDPs:=$licenses.filter(Formula:C1597($1.result:=Path to object:C1547($1.value).name="@4DDP@"))
+	$PDPs:=$licenses.filter(Formula:C1597($1.result:=Path to object:C1547($1.value).name="@PNDP@"))
 	
 	var $status : Object
 	
@@ -1239,25 +1245,48 @@ Function _generateLicense($BuildApp : cs:C1710.BuildApp; $targetFolder : 4D:C170
 			
 		: ($buildApplicationType="Server") && ($DOMs.length#0) && ($UOSs.length#0)
 			
-			$status:=Create deployment license:C1811($targetFolder; File:C1566($UOSs[0]; fk platform path:K87:2); File:C1566($DOMs[0]; fk platform path:K87:2))
+			This:C1470.licenseFile:=File:C1566($UOSs[0]; fk platform path:K87:2)
+			This:C1470.licenseKey:=This:C1470.licenseFile.name
+			
+			If (Not:C34($EvaluationMode))
+				$status:=Create deployment license:C1811($targetFolder; This:C1470.licenseFile; File:C1566($DOMs[0]; fk platform path:K87:2))
+			End if 
 			
 		Else 
 			
 			Case of 
 				: ($UOEs.length#0)
 					
-					$status:=Create deployment license:C1811($targetFolder; File:C1566($UOEs[0]; fk platform path:K87:2))
+					This:C1470.licenseFile:=File:C1566($UOEs[0]; fk platform path:K87:2)
+					This:C1470.licenseKey:=This:C1470.licenseFile.name
+					
+					If (Not:C34($EvaluationMode))
+						$status:=Create deployment license:C1811($targetFolder; This:C1470.licenseFile)
+					End if 
+					
+				: ($PDPs.length#0)
+					
+					This:C1470.licenseFile:=File:C1566($PDPs[0]; fk platform path:K87:2)
+					This:C1470.licenseKey:=This:C1470.licenseFile.name
+					
+					If (Not:C34($EvaluationMode))
+						$status:=Create deployment license:C1811($targetFolder; This:C1470.licenseFile)
+					End if 
 					
 				: ($UUDs.length#0)
 					
-					$status:=Create deployment license:C1811($targetFolder; File:C1566($UUDs[0]; fk platform path:K87:2))
+					This:C1470.licenseFile:=File:C1566($UUDs[0]; fk platform path:K87:2)
+					This:C1470.licenseKey:=This:C1470.licenseFile.name
+					
+					If (Not:C34($EvaluationMode))
+						$status:=Create deployment license:C1811($targetFolder; This:C1470.licenseFile)
+					End if 
 					
 			End case 
 			
 	End case 
 	
 	If ($status#Null:C1517)
-		
 		$CLI._printTask("Generate license")
 		$CLI._printStatus($status.success)
 		If ($status.file#Null:C1517)
@@ -1266,6 +1295,11 @@ Function _generateLicense($BuildApp : cs:C1710.BuildApp; $targetFolder : 4D:C170
 		For each ($error; $status.errors)
 			$CLI.print($error.message; "177;bold").LF()
 		End for each 
+	Else 
+		If ($EvaluationMode)
+			$CLI.print("Skip license generation for evaluation application"; "177;bold").LF()
+		End if 
+		
 	End if 
 	
 Function _getBoolValue($BuildApp : cs:C1710.BuildApp; $path : Text)->$boolValue : Boolean
@@ -1527,6 +1561,28 @@ $sdi_application : Boolean; $publication_name : Text; $buildApplicationType : Te
 	Else 
 		$info.SDIRuntime:="0"
 		$keys.push("SDIRuntime")
+	End if 
+	
+	$EvaluationMode:=$CLI._getBoolValue($BuildApp; "Licenses.EvaluationMode")
+	$EvaluationName:=$CLI._getStringValue($BuildApp; "Licenses.EvaluationName")
+	
+	If ($EvaluationMode)
+		$CLI._printTask("Set Evaluation Key")
+		$license:=This:C1470.licenseKey
+		$license:=Substring:C12($license; $license="R-@" ? 3 : 1)
+		$license:=Insert string:C231($license; "-"; 8)
+		$license:=Insert string:C231($license; "-"; 15)
+		$license:=Insert string:C231($license; "-"; 21)
+		$license:=Change string:C234($license; "XXXXXX-XXXXX-XXX"; 9)
+		$CLI._printItem($license)
+		$info["com.4D.BuildApp.EvaluationKey"]:=This:C1470.licenseKey
+		$keys.push("com.4D.BuildApp.EvaluationKey")
+		If ($EvaluationName#"")
+			$CLI._printTask("Set Evaluation Name")
+			$CLI._printItem($EvaluationName)
+			$info["com.4D.BuildApp.EvaluationName"]:=$EvaluationName
+			$keys.push("com.4D.BuildApp.EvaluationName")
+		End if 
 	End if 
 	
 	$ClientWinSingleInstance:=$CLI._getBoolValue($BuildApp; "CS.ClientWinSingleInstance")

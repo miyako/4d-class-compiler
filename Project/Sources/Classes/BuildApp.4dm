@@ -168,9 +168,7 @@ Function findCertificates()->$certificates : Collection
 			$certificates.push($certificate)
 		End while 
 		
-		//%W-550.16
 		C_TEXT:C284(${1})
-		//%W+550.16
 		
 		If (Count parameters:C259#0)
 			$certificates:=$certificates.query.apply($certificates; Copy parameters:C1790)
@@ -304,7 +302,10 @@ Function parseFile($settingsFile : 4D:C1709.File)->$BuildApp : cs:C1710.BuildApp
 	
 	$_BuildApp.Licenses:=New object:C1471(\
 		"ArrayLicenseWin"; New object:C1471("ItemsCount"; Formula:C1597(This:C1470.Item.length); "Item"; New collection:C1472); \
-		"ArrayLicenseMac"; New object:C1471("ItemsCount"; Formula:C1597(This:C1470.Item.length); "Item"; New collection:C1472))
+		"ArrayLicenseMac"; New object:C1471("ItemsCount"; Formula:C1597(This:C1470.Item.length); "Item"; New collection:C1472); \
+		"EvaluationMode"; False:C215; \
+		"EvaluationName"; ""\
+		)
 	
 	$_BuildApp.RuntimeVL:=New object:C1471("LastDataPathLookup"; "ByAppName")
 	
@@ -404,13 +405,6 @@ Function parseFile($settingsFile : 4D:C1709.File)->$BuildApp : cs:C1710.BuildApp
 			$dom:=DOM Parse XML source:C719($path)
 			
 			If (OK=1)
-				
-				$DataFilePath:=DOM Find XML element:C864($dom; "/Preferences4D/BuildApp/DataFilePath")
-				
-				If (OK=1)
-					DOM GET XML ELEMENT VALUE:C731($DataFilePath; $stringValue)
-					$_BuildApp.DataFilePath:=$stringValue
-				End if 
 				
 				$BuildApplicationName:=DOM Find XML element:C864($dom; "/Preferences4D/BuildApp/BuildApplicationName")
 				
@@ -904,6 +898,20 @@ Function parseFile($settingsFile : 4D:C1709.File)->$BuildApp : cs:C1710.BuildApp
 						End for 
 					End if 
 				End for 
+				
+				$EvaluationMode:=DOM Find XML element:C864($dom; "/Preferences4D/BuildApp/Licenses/EvaluationMode")
+				
+				If (OK=1)
+					DOM GET XML ELEMENT VALUE:C731($EvaluationMode; $boolValue)
+					$_BuildApp.Licenses.EvaluationMode:=$boolValue
+				End if 
+				
+				$EvaluationName:=DOM Find XML element:C864($dom; "/Preferences4D/BuildApp/Licenses/EvaluationName")
+				
+				If (OK=1)
+					DOM GET XML ELEMENT VALUE:C731($EvaluationName; $stringValue)
+					$_BuildApp.Licenses.EvaluationName:=$stringValue
+				End if 
 				
 				ARRAY TEXT:C222($names; 4)
 				
