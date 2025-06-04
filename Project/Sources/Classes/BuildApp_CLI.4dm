@@ -1209,6 +1209,8 @@ Function _generateLicense($BuildApp : cs:C1710.BuildApp; $targetFolder : 4D:C170
 	
 	$CLI:=This:C1470
 	
+	$AutomaticLicenseIntegration:=$CLI._getBoolValue($BuildApp; "Licenses.AutomaticLicenseIntegration")
+	
 	$EvaluationMode:=$CLI._getBoolValue($BuildApp; "Licenses.EvaluationMode")
 	
 	var $platform; $ArrayLicense___ : Text
@@ -1249,7 +1251,11 @@ Function _generateLicense($BuildApp : cs:C1710.BuildApp; $targetFolder : 4D:C170
 			This:C1470.licenseKey:=This:C1470.licenseFile.name
 			
 			If (Not:C34($EvaluationMode))
-				$status:=Create deployment license:C1811($targetFolder; This:C1470.licenseFile; File:C1566($DOMs[0]; fk platform path:K87:2))
+				If ($AutomaticLicenseIntegration)
+					$status:=Create deployment license:C1811($targetFolder)
+				Else 
+					$status:=Create deployment license:C1811($targetFolder; This:C1470.licenseFile; File:C1566($DOMs[0]; fk platform path:K87:2))
+				End if 
 			End if 
 			
 		Else 
@@ -1261,7 +1267,11 @@ Function _generateLicense($BuildApp : cs:C1710.BuildApp; $targetFolder : 4D:C170
 					This:C1470.licenseKey:=This:C1470.licenseFile.name
 					
 					If (Not:C34($EvaluationMode))
-						$status:=Create deployment license:C1811($targetFolder; This:C1470.licenseFile)
+						If ($AutomaticLicenseIntegration)
+							$status:=Create deployment license:C1811($targetFolder)
+						Else 
+							$status:=Create deployment license:C1811($targetFolder; This:C1470.licenseFile)
+						End if 
 					End if 
 					
 				: ($PDPs.length#0)
@@ -1270,7 +1280,11 @@ Function _generateLicense($BuildApp : cs:C1710.BuildApp; $targetFolder : 4D:C170
 					This:C1470.licenseKey:=This:C1470.licenseFile.name
 					
 					If (Not:C34($EvaluationMode))
-						$status:=Create deployment license:C1811($targetFolder; This:C1470.licenseFile)
+						If ($AutomaticLicenseIntegration)
+							$status:=Create deployment license:C1811($targetFolder)
+						Else 
+							$status:=Create deployment license:C1811($targetFolder; This:C1470.licenseFile)
+						End if 
 					End if 
 					
 				: ($UUDs.length#0)
@@ -1279,7 +1293,11 @@ Function _generateLicense($BuildApp : cs:C1710.BuildApp; $targetFolder : 4D:C170
 					This:C1470.licenseKey:=This:C1470.licenseFile.name
 					
 					If (Not:C34($EvaluationMode))
-						$status:=Create deployment license:C1811($targetFolder; This:C1470.licenseFile)
+						If ($AutomaticLicenseIntegration)
+							$status:=Create deployment license:C1811($targetFolder)
+						Else 
+							$status:=Create deployment license:C1811($targetFolder; This:C1470.licenseFile)
+						End if 
 					End if 
 					
 			End case 

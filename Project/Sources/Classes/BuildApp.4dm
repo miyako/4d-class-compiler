@@ -306,7 +306,8 @@ Function parseFile($settingsFile : 4D:C1709.File)->$BuildApp : cs:C1710.BuildApp
 		"ArrayLicenseWin"; New object:C1471("ItemsCount"; Formula:C1597(This:C1470.Item.length); "Item"; New collection:C1472); \
 		"ArrayLicenseMac"; New object:C1471("ItemsCount"; Formula:C1597(This:C1470.Item.length); "Item"; New collection:C1472); \
 		"EvaluationMode"; False:C215; \
-		"EvaluationName"; ""\
+		"EvaluationName"; ""; \
+		"AutomaticLicenseIntegration"; False:C215\
 		)
 	
 	$_BuildApp.RuntimeVL:=New object:C1471("LastDataPathLookup"; "ByAppName")
@@ -927,6 +928,13 @@ Function parseFile($settingsFile : 4D:C1709.File)->$BuildApp : cs:C1710.BuildApp
 				If (OK=1)
 					DOM GET XML ELEMENT VALUE:C731($EvaluationName; $stringValue)
 					$_BuildApp.Licenses.EvaluationName:=$stringValue
+				End if 
+				
+				$AutomaticLicenseIntegration:=DOM Find XML element:C864($dom; "/Preferences4D/BuildApp/Licenses/AutomaticLicenseIntegration")
+				
+				If (OK=1)
+					DOM GET XML ELEMENT VALUE:C731($AutomaticLicenseIntegration; $boolValue)
+					$_BuildApp.Licenses.AutomaticLicenseIntegration:=$boolValue
 				End if 
 				
 				ARRAY TEXT:C222($names; 4)
