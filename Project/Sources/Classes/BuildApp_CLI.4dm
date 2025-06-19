@@ -756,7 +756,7 @@ $sourceProjectFile : 4D:C1709.File; $BuildApplicationName : Text; $publication_n
 						
 					End if 
 					
-					$folders:=$ProjectFolder.parent.folders(fk ignore invisible:K87:22).query("name in :1"; New collection:C1472("Resources"; "Libraries"; "Default Data"; "Extras"))
+					$folders:=$ProjectFolder.parent.folders(fk ignore invisible:K87:22).query("name in :1"; New collection:C1472("Resources"; "Libraries"; "Default Data"; "Extras"; "Documentation"))
 					
 					If ($folders.length#0)
 						
