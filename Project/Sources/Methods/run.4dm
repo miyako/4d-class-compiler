@@ -1,7 +1,7 @@
 //%attributes = {"invisible":true}
 #DECLARE($mode : Text)
 
-If (Get application info:C1599.headless)
+If (Application info:C1599.headless)
 	
 /*
 	
@@ -71,6 +71,10 @@ https://developer.4d.com/docs/Admin/cli/#tool4d
 				
 				If ($options.includes("build-component"))
 					$CLI.buildComponent($compileProject; $buildDestinationPath)
+				End if 
+				
+				If ($options.includes("build-developer-component"))
+					$CLI.buildDeveloperComponent($compileProject; $buildDestinationPath)
 				End if 
 				
 				If ($options.includes("build"))
