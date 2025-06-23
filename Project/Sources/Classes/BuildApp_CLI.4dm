@@ -3,6 +3,43 @@ Class extends CLI
 property licenseKey : Text
 property licenseFile : 4D:C1709.File
 
+Function buildDeveloperComponent($compileProject : 4D:C1709.File; $buildDestinationPath : Text)->$CLI : cs:C1710.BuildApp_CLI
+	
+	$CLI:=This:C1470
+	
+	var $BuildApplicationName : Text
+	$BuildApplicationName:=$compileProject.parent.parent.name
+	If ($BuildApplicationName="")
+		$BuildApplicationName:=$compileProject.name
+	End if 
+	
+	$CLI._printTask("Set application name")
+	$CLI._printItem($BuildApplicationName)
+	
+	$BuildDestFolderPath:=Folder:C1567($buildDestinationPath; fk posix path:K87:1).platformPath
+	$BuildDestFolder:=Folder:C1567($BuildDestFolderPath; fk platform path:K87:2).folder("Components")
+	$BuildDestFolder.create()
+	
+	$targetPackage:=$BuildDestFolder.folder($BuildApplicationName+".4dbase")
+	
+	$localProjectFolder:=File:C1566(Structure file:C489; fk platform path:K87:2).parent
+	
+	If ($targetPackage.path#$localProjectFolder.path)
+		If ($targetPackage.exists)
+			$targetPackage.delete(Delete with contents:K24:24)
+		End if 
+	End if 
+	
+	$targetPackage.create()
+	
+	$CLI._printTask("Set destination folder")
+	$CLI._printStatus($targetPackage.exists)
+	$CLI._printPath($targetPackage)
+	
+	//TODO:duplicate interpreted component without compiled code
+	
+	return This:C1470
+	
 Function buildComponent($compileProject : 4D:C1709.File; $buildDestinationPath : Text)->$CLI : cs:C1710.BuildApp_CLI
 	
 	var $BuildApp : cs:C1710.BuildApp
