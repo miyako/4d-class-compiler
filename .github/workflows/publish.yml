@@ -68,6 +68,7 @@ jobs:
           rm -rf Settings
           rm -rf Project/DerivedData
           rm -rf userPreferences.miyako
+          rm -f  ${zip_path}
           ditto -c -k --sequesterRsrc --keepParent . "${zip_path}"
           echo "asset_path=${GITHUB_WORKSPACE}/${zip_path}" >> $GITHUB_OUTPUT  
           echo "asset_name=${zip_path}" >> $GITHUB_OUTPUT
