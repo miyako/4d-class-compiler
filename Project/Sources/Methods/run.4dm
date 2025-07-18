@@ -74,7 +74,7 @@ https://developer.4d.com/docs/Admin/cli/#tool4d
 							: ($folder.name="4D Server")
 								$serverRuntimePath:=$folder.platformPath
 							Else 
-								$serverRuntimePath:=$folder.platformPath
+								$buildDestinationPath:=$folder.platformPath
 						End case 
 				End case 
 			End for each 
