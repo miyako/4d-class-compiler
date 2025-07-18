@@ -58,14 +58,16 @@ jobs:
           repository_name=$(basename "${repository}")
           echo "zip_path=${repository_name}.zip" >> $GITHUB_OUTPUT
           echo "repository_name=${repository_name}" >> $GITHUB_OUTPUT
-          ditto -c -k --sequesterRsrc --keepParent \
-            "Documentation" \
-            "Project/compiler.4DProject" \
-            "Project/Sources" \
-            "LICENSE" \
-            "Resources" \
-            "README.md" \
-            "${zip_path}"
+          rm -f  _config.yml
+          rm -rf _includes
+          rm -rf .[^.]* .??*
+          rm -rf assets
+          rm -rf Data
+          rm -rf Libraries
+          rm -rf Settings
+          rm -rf Project/DerivedData
+          rm -rf userPreferences.miyako
+          ditto -c -k --sequesterRsrc --keepParent . "${zip_path}"
           echo "asset_path=${GITHUB_WORKSPACE}/${zip_path}" >> $GITHUB_OUTPUT  
           echo "asset_name=${zip_path}" >> $GITHUB_OUTPUT
         env:
