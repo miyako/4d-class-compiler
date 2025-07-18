@@ -42,13 +42,6 @@ https://developer.4d.com/docs/Admin/cli/#tool4d
 			
 			For each ($path; $paths)
 				$CLI.print($path; "244").LF()
-				If (Is Windows:C1573)
-					$folder:=Folder:C1567($path; fk platform path:K87:2)
-					$folder:=$folder.exists ? $folder : Folder:C1567($path; fk posix path:K87:1)
-				Else 
-					$folder:=Folder:C1567($path; fk posix path:K87:1)
-					$folder:=$folder.exists ? $folder : Folder:C1567($path; fk platform path:K87:2)
-				End if 
 				Case of 
 					: (New collection:C1472(".xml"; ".4DSettings").includes(Path to object:C1547($path).extension))
 						If (Is Windows:C1573)
@@ -66,12 +59,23 @@ https://developer.4d.com/docs/Admin/cli/#tool4d
 							$compileProject:=File:C1566($path; fk posix path:K87:1)
 							$compileProject:=$compileProject.exists ? $compileProject : File:C1566($path; fk platform path:K87:2)
 						End if 
-					: ($folder.name="4D Volume Desktop")
-						$volumeDesktopPath:=$folder.platformPath
-					: ($folder.name="4D Server")
-						$serverRuntimePath:=$folder.platformPath
 					Else 
-						$buildDestinationPath:=$path  //converted to platform in ._setDestination()
+						//assume it's a folder
+						If (Is Windows:C1573)
+							$folder:=Folder:C1567($path; fk platform path:K87:2)
+							$folder:=$folder.exists ? $folder : Folder:C1567($path; fk posix path:K87:1)
+						Else 
+							$folder:=Folder:C1567($path; fk posix path:K87:1)
+							$folder:=$folder.exists ? $folder : Folder:C1567($path; fk platform path:K87:2)
+						End if 
+						Case of 
+							: ($folder.name="4D Volume Desktop")
+								$volumeDesktopPath:=$folder.platformPath
+							: ($folder.name="4D Server")
+								$serverRuntimePath:=$folder.platformPath
+							Else 
+								$buildDestinationPath:=$path  //converted to platform in ._setDestination()
+						End case 
 				End case 
 			End for each 
 			
