@@ -60,7 +60,7 @@ Function buildComponent($compileProject : 4D:C1709.File; $buildDestinationPath :
 	
 	return This:C1470
 	
-Function build($buildProject : 4D:C1709.File; $compileProject : 4D:C1709.File; $buildDestinationPath : Text; $noSign : Boolean)->$CLI : cs:C1710.BuildApp_CLI
+Function build($buildProject : 4D:C1709.File; $compileProject : 4D:C1709.File; $buildDestinationPath : Text; $noSign : Boolean; $volumeDesktopPath : Text; $serverRuntimePath : Text)->$CLI : cs:C1710.BuildApp_CLI
 	
 	$CLI:=This:C1470
 	
@@ -177,7 +177,11 @@ Function build($buildProject : 4D:C1709.File; $compileProject : 4D:C1709.File; $
 						
 						$RuntimeVL___Folder:="RuntimeVL"+$platform+"Folder"
 						
-						$RuntimeVLFolderPath:=$CLI._getStringValue($BuildApp; "SourcesFiles.RuntimeVL."+$RuntimeVL___Folder)
+						If ($volumeDesktopPath#"")
+							$RuntimeVLFolderPath:=$volumeDesktopPath
+						Else 
+							$RuntimeVLFolderPath:=$CLI._getStringValue($BuildApp; "SourcesFiles.RuntimeVL."+$RuntimeVL___Folder)
+						End if 
 						
 						If ($RuntimeVLFolderPath#"")
 							
@@ -224,6 +228,12 @@ Function build($buildProject : 4D:C1709.File; $compileProject : 4D:C1709.File; $
 						$CLI._printPath($BuildDestFolder)
 						
 						$Server___Folder:="Server"+$platform+"Folder"
+						
+						If ($serverRuntimePath#"")
+							$ServerFolderPath:=$serverRuntimePath
+						Else 
+							$ServerFolderPath:=$CLI._getStringValue($BuildApp; "SourcesFiles.RuntimeVL."+$RuntimeVL___Folder)
+						End if 
 						
 						$ServerFolderPath:=$CLI._getStringValue($BuildApp; "SourcesFiles.CS."+$Server___Folder)
 						
@@ -351,7 +361,11 @@ Function build($buildProject : 4D:C1709.File; $compileProject : 4D:C1709.File; $
 							$Client___Folder:="Client"+$platform+"FolderToWin"
 						End if 
 						
-						$ClientFolderPath:=$CLI._getStringValue($BuildApp; "SourcesFiles.CS."+$Client___Folder)
+						If ($volumeDesktopPath#"")
+							$ClientFolderPath:=$volumeDesktopPath
+						Else 
+							$ClientFolderPath:=$CLI._getStringValue($BuildApp; "SourcesFiles.CS."+$Client___Folder)
+						End if 
 						
 						If ($ClientFolderPath#"")
 							
@@ -595,8 +609,10 @@ $sourceProjectFile : 4D:C1709.File; $BuildApplicationName : Text; $publication_n
 					$folders:=$startupProjectFolder.folders(fk ignore invisible:K87:22).query("name in :1"; New collection:C1472("Components"; "Resources"; "Libraries"; "Extras"))
 					
 					For each ($folder; $folders)
-						$targetProjectFolder:=$folder.copyTo($ContentsFolder)
-						$CLI._printPath($targetProjectFolder)
+						If ($folder.exists)
+							$targetProjectFolder:=$folder.copyTo($ContentsFolder)
+							$CLI._printPath($targetProjectFolder)
+						End if 
 					End for each 
 					
 					For each ($file; $startupProjectFolder.files(fk ignore invisible:K87:22))
@@ -762,7 +778,7 @@ $sourceProjectFile : 4D:C1709.File; $BuildApplicationName : Text; $publication_n
 					
 					$PackProject:=$CLI._getBoolValue($BuildApp; "PackProject")
 					
-					If ($PackProject)
+					If (Not:C34($PackProject))
 						
 						$zip:=New object:C1471
 						$zip.files:=New collection:C1472($targetProjectFolder)
@@ -799,10 +815,12 @@ $sourceProjectFile : 4D:C1709.File; $BuildApplicationName : Text; $publication_n
 						
 						$CLI._printTask("Copy database folders").LF()
 						For each ($folder; $folders)
-							If (Not:C34($PackProject)) && ($folder.name#"Default Data")
-								$CLI._printPath($folder.copyTo($ContentsFolder.folder("Project")))
-							Else 
-								$CLI._printPath($folder.copyTo($ContentsFolder))
+							If ($folder.exists)
+								If ($PackProject) && ($folder.name#"Default Data")
+									$CLI._printPath($folder.copyTo($ContentsFolder.folder("Project")))
+								Else 
+									$CLI._printPath($folder.copyTo($ContentsFolder))
+								End if 
 							End if 
 						End for each 
 						
