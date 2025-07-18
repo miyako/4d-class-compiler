@@ -21,7 +21,7 @@ on:
           required: true
 
 env: 
-  project_path: hpki/Project/hpki.4DProject
+  project_path: 4d-class-compiler/Project/4d-class-compiler.4DProject
   
 jobs:
 
