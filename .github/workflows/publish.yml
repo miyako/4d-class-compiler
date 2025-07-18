@@ -75,7 +75,7 @@ jobs:
           repository: ${{ github.repository }}
 
       - name: List contents of output
-        run: ls -lh output
+        run: ls -lh .
         
       - name: create release
         id: release
