@@ -1,0 +1,93 @@
+name: Publish
+  
+on:
+  push:
+    branches:
+    - main
+    paths:
+      - '*/Project/Sources/**/*.4dm'
+      - '*/Project/Sources/*/*.4DForm'
+      - '*/Project/Sources/*.4DCatalog'
+      - '*/Project/Resources/**'
+  workflow_dispatch:
+    inputs:
+        mode:
+          type: choice
+          description: semantic versioning
+          options: 
+          - patch
+          - minor 
+          - major
+          required: true
+
+env: 
+  project_path: hpki/Project/hpki.4DProject
+  
+jobs:
+
+  publish:
+    permissions: write-all
+    runs-on: [macos-latest]
+    steps:
+
+      - name: configure
+        id: configure
+        run: |
+          if [ "${mode}" = "" ]; then
+          echo "mode=patch" >> $GITHUB_OUTPUT
+          else
+          echo "mode=${mode}" >> $GITHUB_OUTPUT
+          fi
+          echo "project_path=${GITHUB_WORKSPACE}/${project_path}" >> $GITHUB_OUTPUT 
+        shell: bash
+        env:
+          mode: ${{ inputs.mode }} 
+
+      - name: checkout 
+        uses: actions/checkout@v4
+
+      - name: set version
+        id: version
+        uses: miyako/4D/.github/actions/package-set-version@v1
+        with:
+          mode: ${{ steps.configure.outputs.mode }}
+
+      - name: zip
+        id: zip
+        run: |
+          repository_name=$(basename "${repository}")
+          echo "zip_path=${repository_name}.zip" >> $GITHUB_OUTPUT
+          echo "repository_name=${repository_name}" >> $GITHUB_OUTPUT
+          ditto -c -k --sequesterRsrc --keepParent \
+            "Documentation" \
+            "Project/compiler.4DProject" \
+            "Project/Sources" \
+            "LICENSE" \
+            "Resources" \
+            "README.md" \
+            "${zip_path}"
+          echo "asset_path=${GITHUB_WORKSPACE}/${zip_path}" >> $GITHUB_OUTPUT  
+          echo "asset_name=${zip_path}" >> $GITHUB_OUTPUT
+        env:
+          repository: ${{ github.repository }}
+
+      - name: List contents of output
+        run: ls -lh output
+        
+      - name: create release
+        id: release
+        uses: actions/create-release@v1
+        with:
+          tag_name: ${{ steps.version.outputs.version }}
+          release_name: ${{ steps.version.outputs.version }}
+          draft: false
+          prerelease: false
+          
+      - name: upload zip
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.release.outputs.upload_url }}
+          asset_path: ${{ steps.zip.outputs.asset_path }}
+          asset_name: ${{ steps.zip.outputs.asset_name }}
+          asset_content_type: application/zip
+ 
