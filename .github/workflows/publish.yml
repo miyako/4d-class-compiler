@@ -93,6 +93,5 @@ jobs:
           asset_path: ${{ steps.zip.outputs.asset_path }}
           asset_name: ${{ steps.zip.outputs.asset_name }}
           asset_content_type: application/zip
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+          token: ${{ secrets.GITHUB_TOKEN }}
  
