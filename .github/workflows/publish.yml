@@ -85,7 +85,9 @@ jobs:
           release_name: ${{ steps.version.outputs.version }}
           draft: false
           prerelease: false
-          
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    
       - name: upload zip
         uses: actions/upload-release-asset@v1
         with:
@@ -93,5 +95,3 @@ jobs:
           asset_path: ${{ steps.zip.outputs.asset_path }}
           asset_name: ${{ steps.zip.outputs.asset_name }}
           asset_content_type: application/zip
-          token: ${{ secrets.GITHUB_TOKEN }}
- 
