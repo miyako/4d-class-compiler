@@ -1514,7 +1514,7 @@ Function _setDestination($BuildApp : cs:C1710.BuildApp; $path : Text)->$BuildDes
 	$Build___DestFolder:="Build"+$platform+"DestFolder"
 	
 	If ($path#"")
-		$BuildDestFolderPath:=Folder:C1567($path; fk posix path:K87:1).platformPath
+		$BuildDestFolderPath:=$path
 	Else 
 		$BuildDestFolderPath:=$CLI._getStringValue($BuildApp; $Build___DestFolder)
 	End if 
