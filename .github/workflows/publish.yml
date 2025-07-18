@@ -56,7 +56,8 @@ jobs:
         id: zip
         run: |
           repository_name=$(basename "${repository}")
-          echo "zip_path=${repository_name}.zip" >> $GITHUB_OUTPUT
+          zip_path=${repository_name}.zip
+          echo "zip_path=${zip_path}" >> $GITHUB_OUTPUT
           echo "repository_name=${repository_name}" >> $GITHUB_OUTPUT
           rm -f  _config.yml
           rm -rf _includes
