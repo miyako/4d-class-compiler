@@ -2,3 +2,4 @@ userPreferences.*
 Project/DerivedData/*
 Data/*
 Libraries/lib4d-arm64.dylib
+Settings/buildApp.4DSettings
