@@ -816,10 +816,15 @@ $sourceProjectFile : 4D:C1709.File; $BuildApplicationName : Text; $publication_n
 						$CLI._printTask("Copy database folders").LF()
 						For each ($folder; $folders)
 							If ($folder.exists)
-								If (Not:C34($PackProject)) && ($folder.name#"Default Data")
-									$CLI._printPath($folder.copyTo($ContentsFolder.folder("Project")))
-								Else 
+								
+								If ($PackProject)
 									$CLI._printPath($folder.copyTo($ContentsFolder))
+								Else 
+									If ($folder.name="Default Data")
+										$CLI._printPath($folder.copyTo($ContentsFolder))
+									Else 
+										$CLI._printPath($folder.copyTo($ContentsFolder.folder("Project")))
+									End if 
 								End if 
 							End if 
 						End for each 
