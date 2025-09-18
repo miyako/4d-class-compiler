@@ -5,6 +5,8 @@
 
 Classes to compile, build, sign a project.
 
+**note to self**: releases do not need to be compiled
+
 # To build a project with tool4d
 
 ```
