@@ -1307,10 +1307,7 @@ Function _generateLicense($BuildApp : cs:C1710.BuildApp; $targetFolder : 4D:C170
 			
 			If (Not:C34($EvaluationMode))
 				If ($AutomaticLicenseIntegration)
-					//$eval:="<!--#4deval $2->:=Create deployment license:C1811($1)-->"
-					//$status:={}
-					//PROCESS 4D TAGS($eval; $eval; $targetFolder; ->$status)
-					$status:=Create deployment license:C1811($targetFolder)
+					$status:=Create deployment license:C1811($targetFolder; 4D Server:K5:6)
 				Else 
 					$status:=Create deployment license:C1811($targetFolder; This:C1470.licenseFile; File:C1566($DOMs[0]; fk platform path:K87:2))
 				End if 
@@ -1326,10 +1323,7 @@ Function _generateLicense($BuildApp : cs:C1710.BuildApp; $targetFolder : 4D:C170
 					
 					If (Not:C34($EvaluationMode))
 						If ($AutomaticLicenseIntegration)
-							//$eval:="<!--#4deval $2->:=Create deployment license:C1811($1)-->"
-							//$status:={}
-							//PROCESS 4D TAGS($eval; $eval; $targetFolder; ->$status)
-							$status:=Create deployment license:C1811($targetFolder)
+							$status:=Create deployment license:C1811($targetFolder; 4D Volume desktop:K5:2)
 						Else 
 							$status:=Create deployment license:C1811($targetFolder; This:C1470.licenseFile)
 						End if 
@@ -1342,10 +1336,7 @@ Function _generateLicense($BuildApp : cs:C1710.BuildApp; $targetFolder : 4D:C170
 					
 					If (Not:C34($EvaluationMode))
 						If ($AutomaticLicenseIntegration)
-							//$eval:="<!--#4deval $2->:=Create deployment license:C1811($1)-->"
-							//$status:={}
-							//PROCESS 4D TAGS($eval; $eval; $targetFolder; ->$status)
-							$status:=Create deployment license:C1811($targetFolder)
+							$status:=Create deployment license:C1811($targetFolder; 4D Volume desktop:K5:2)
 						Else 
 							$status:=Create deployment license:C1811($targetFolder; This:C1470.licenseFile)
 						End if 
@@ -1358,10 +1349,7 @@ Function _generateLicense($BuildApp : cs:C1710.BuildApp; $targetFolder : 4D:C170
 					
 					If (Not:C34($EvaluationMode))
 						If ($AutomaticLicenseIntegration)
-							//$eval:="<!--#4deval $2->:=Create deployment license:C1811($1)-->"
-							//$status:={}
-							//PROCESS 4D TAGS($eval; $eval; $targetFolder; ->$status)
-							$status:=Create deployment license:C1811($targetFolder)
+							$status:=Create deployment license:C1811($targetFolder; 4D Volume desktop:K5:2)
 						Else 
 							$status:=Create deployment license:C1811($targetFolder; This:C1470.licenseFile)
 						End if 
