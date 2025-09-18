@@ -778,7 +778,7 @@ $sourceProjectFile : 4D:C1709.File; $BuildApplicationName : Text; $publication_n
 					
 					$PackProject:=$CLI._getBoolValue($BuildApp; "PackProject")
 					
-					If (Not:C34($PackProject))
+					If ($PackProject)
 						
 						$zip:=New object:C1471
 						$zip.files:=New collection:C1472($targetProjectFolder)
@@ -816,7 +816,7 @@ $sourceProjectFile : 4D:C1709.File; $BuildApplicationName : Text; $publication_n
 						$CLI._printTask("Copy database folders").LF()
 						For each ($folder; $folders)
 							If ($folder.exists)
-								If ($PackProject) && ($folder.name#"Default Data")
+								If (Not:C34($PackProject)) && ($folder.name#"Default Data")
 									$CLI._printPath($folder.copyTo($ContentsFolder.folder("Project")))
 								Else 
 									$CLI._printPath($folder.copyTo($ContentsFolder))
@@ -1307,7 +1307,10 @@ Function _generateLicense($BuildApp : cs:C1710.BuildApp; $targetFolder : 4D:C170
 			
 			If (Not:C34($EvaluationMode))
 				If ($AutomaticLicenseIntegration)
-					$status:=Create deployment license:C1811($targetFolder)
+					$eval:="<!--#4deval $2->:=Create deployment license:C1811($1)-->"
+					$status:={}
+					PROCESS 4D TAGS:C816($eval; $eval; $targetFolder; ->$status)
+					//$status:=Create deployment license($targetFolder)
 				Else 
 					$status:=Create deployment license:C1811($targetFolder; This:C1470.licenseFile; File:C1566($DOMs[0]; fk platform path:K87:2))
 				End if 
@@ -1323,7 +1326,10 @@ Function _generateLicense($BuildApp : cs:C1710.BuildApp; $targetFolder : 4D:C170
 					
 					If (Not:C34($EvaluationMode))
 						If ($AutomaticLicenseIntegration)
-							$status:=Create deployment license:C1811($targetFolder)
+							$eval:="<!--#4deval $2->:=Create deployment license:C1811($1)-->"
+							$status:={}
+							PROCESS 4D TAGS:C816($eval; $eval; $targetFolder; ->$status)
+							//$status:=Create deployment license($targetFolder)
 						Else 
 							$status:=Create deployment license:C1811($targetFolder; This:C1470.licenseFile)
 						End if 
@@ -1336,7 +1342,10 @@ Function _generateLicense($BuildApp : cs:C1710.BuildApp; $targetFolder : 4D:C170
 					
 					If (Not:C34($EvaluationMode))
 						If ($AutomaticLicenseIntegration)
-							$status:=Create deployment license:C1811($targetFolder)
+							$eval:="<!--#4deval $2->:=Create deployment license:C1811($1)-->"
+							$status:={}
+							PROCESS 4D TAGS:C816($eval; $eval; $targetFolder; ->$status)
+							//$status:=Create deployment license($targetFolder)
 						Else 
 							$status:=Create deployment license:C1811($targetFolder; This:C1470.licenseFile)
 						End if 
@@ -1349,7 +1358,10 @@ Function _generateLicense($BuildApp : cs:C1710.BuildApp; $targetFolder : 4D:C170
 					
 					If (Not:C34($EvaluationMode))
 						If ($AutomaticLicenseIntegration)
-							$status:=Create deployment license:C1811($targetFolder)
+							$eval:="<!--#4deval $2->:=Create deployment license:C1811($1)-->"
+							$status:={}
+							PROCESS 4D TAGS:C816($eval; $eval; $targetFolder; ->$status)
+							//$status:=Create deployment license($targetFolder)
 						Else 
 							$status:=Create deployment license:C1811($targetFolder; This:C1470.licenseFile)
 						End if 
