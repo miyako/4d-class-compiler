@@ -32,17 +32,10 @@ jobs:
 
       - name: configure
         id: configure
-        run: |
-          if [ "${mode}" = "" ]; then
-          echo "mode=patch" >> $GITHUB_OUTPUT
-          else
-          echo "mode=${mode}" >> $GITHUB_OUTPUT
-          fi
-          echo "project_path=${GITHUB_WORKSPACE}/${project_path}" >> $GITHUB_OUTPUT 
-        shell: bash
-        env:
-          mode: ${{ inputs.mode }} 
-
+        uses: miyako/4D/.github/actions/bash/configure@v1
+        with:
+          mode: ${{ inputs.mode || 'patch' }}
+          
       - name: checkout 
         uses: actions/checkout@v4
 
@@ -65,9 +58,9 @@ jobs:
           rm -rf assets
           rm -rf Data
           rm -rf Libraries
-          rm -rf Settings
+          rm -rf Settings/buildApp.4DSettings
           rm -rf Project/DerivedData
-          rm -rf userPreferences.miyako
+          rm -rf userPreferences.*
           rm -f  ${zip_path}
           ditto -c -k --sequesterRsrc --keepParent . "${zip_path}"
           echo "asset_path=${GITHUB_WORKSPACE}/${zip_path}" >> $GITHUB_OUTPUT  
