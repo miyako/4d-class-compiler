@@ -90,7 +90,11 @@ https://developer.4d.com/docs/Admin/cli/#tool4d
 				End if 
 				
 				If ($options.includes("build-component"))
-					$CLI.buildComponent($compileProject; $buildDestinationPath)
+					$CLI.buildComponent($compileProject; $buildDestinationPath; True:C214)
+				End if 
+				
+				If ($options.includes("build-dependency"))
+					$CLI.buildComponent($compileProject; $buildDestinationPath; False:C215)
 				End if 
 				
 				If ($options.includes("build-developer-component"))
