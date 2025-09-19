@@ -89,17 +89,16 @@ https://developer.4d.com/docs/Admin/cli/#tool4d
 					$CLI.compile($compileProject)
 				End if 
 				
-				If ($options.includes("build-component"))
-					$CLI.buildComponent($compileProject; $buildDestinationPath; True:C214)
-				End if 
-				
-				If ($options.includes("build-dependency"))
-					$CLI.buildComponent($compileProject; $buildDestinationPath; False:C215)
-				End if 
-				
-				If ($options.includes("build-developer-component"))
-					$CLI.buildDeveloperComponent($compileProject; $buildDestinationPath)
-				End if 
+				Case of 
+					: ($options.includes("build-component"))  //PackProject=true,UseStandardZip=false
+						$CLI.buildComponent($compileProject; $buildDestinationPath; True:C214; False:C215)
+					: ($options.includes("build-dependency"))  //PackProject=false,UseStandardZip=false
+						$CLI.buildComponent($compileProject; $buildDestinationPath; False:C215; False:C215)
+					: ($options.includes("build-public-component"))  //PackProject=true,UseStandardZip=true
+						$CLI.buildComponent($compileProject; $buildDestinationPath; True:C214; True:C214)
+					: ($options.includes("build-developer-component"))
+						$CLI.buildDeveloperComponent($compileProject; $buildDestinationPath)
+				End case 
 				
 				If ($options.includes("build"))
 					$CLI.build($buildProject; $compileProject; $buildDestinationPath; True:C214; $volumeDesktopPath; $serverRuntimePath)
