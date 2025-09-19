@@ -40,12 +40,16 @@ Function buildDeveloperComponent($compileProject : 4D:C1709.File; $buildDestinat
 	
 	return This:C1470
 	
-Function buildComponent($compileProject : 4D:C1709.File; $buildDestinationPath : Text; $packProject : Boolean)->$CLI : cs:C1710.BuildApp_CLI
+Function buildComponent($compileProject : 4D:C1709.File; \
+$buildDestinationPath : Text; \
+$packProject : Boolean; \
+$standardZip : Boolean)->$CLI : cs:C1710.BuildApp_CLI
 	
 	var $BuildApp : cs:C1710.BuildApp
 	$BuildApp:=cs:C1710.BuildApp.new()
 	
 	$BuildApp.PackProject:=$packProject
+	$BuildApp.UseStandardZipFormat:=$standardZip
 	$BuildApp.BuildComponent:=True:C214
 	$BuildApp.BuildApplicationName:=$compileProject.parent.parent.name
 	
@@ -557,7 +561,10 @@ $compileProject : 4D:C1709.File; $buildApplicationType : Text)
 	
 Function _copyDatabase($BuildApp : cs:C1710.BuildApp; \
 $targetFolder : 4D:C1709.Folder; \
-$sourceProjectFile : 4D:C1709.File; $BuildApplicationName : Text; $publication_name : Text; $buildApplicationType : Text)
+$sourceProjectFile : 4D:C1709.File; \
+$BuildApplicationName : Text; \
+$publication_name : Text; \
+$buildApplicationType : Text)
 	
 	$CLI:=This:C1470
 	
