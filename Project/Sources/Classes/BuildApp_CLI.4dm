@@ -823,16 +823,7 @@ $buildApplicationType : Text)
 						$CLI._printTask("Copy database folders").LF()
 						For each ($folder; $folders)
 							If ($folder.exists)
-								
-								If ($PackProject)
-									$CLI._printPath($folder.copyTo($ContentsFolder))
-								Else 
-									If ($folder.name="Default Data")
-										$CLI._printPath($folder.copyTo($ContentsFolder))
-									Else 
-										$CLI._printPath($folder.copyTo($ContentsFolder.folder("Project")))
-									End if 
-								End if 
+								$CLI._printPath($folder.copyTo($ContentsFolder))
 							End if 
 						End for each 
 						
