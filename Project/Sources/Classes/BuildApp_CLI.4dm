@@ -1815,7 +1815,7 @@ $buildApplicationType : Text)
 			If ($ClientMacIconPath#"")
 				
 				If ([":"; "\\"].includes(Substring:C12($ClientMacIconPath; 1; 1)))
-					$ClientMacIconPath:=$BuildApp.PROJECT.platformPath+Substring:C12($ClientMacIconPath; 2)
+					$ClientMacIconPath:=$BuildApp.PROJECT.parent.platformPath+Substring:C12($ClientMacIconPath; 2)
 				End if 
 				
 				$ClientIconFile:=File:C1566($ClientMacIconPath; fk platform path:K87:2)
@@ -1856,7 +1856,7 @@ $buildApplicationType : Text)
 			If ($ClientWinIconPath#"")
 				
 				If ([":"; "\\"].includes(Substring:C12($ClientWinIconPath; 1; 1)))
-					$ClientWinIconPath:=$BuildApp.PROJECT.platformPath+Substring:C12($ClientWinIconPath; 2)
+					$ClientWinIconPath:=$BuildApp.PROJECT.parent.platformPath+Substring:C12($ClientWinIconPath; 2)
 				End if 
 				
 				$ClientIconFile:=File:C1566($ClientWinIconPath; fk platform path:K87:2)
@@ -1897,7 +1897,7 @@ $buildApplicationType : Text)
 			If ($ServerIconPath#"")
 				
 				If ([":"; "\\"].includes(Substring:C12($ServerIconPath; 1; 1)))
-					$ServerIconPath:=$BuildApp.PROJECT.platformPath+Substring:C12($ServerIconPath; 2)
+					$ServerIconPath:=$BuildApp.PROJECT.parent.platformPath+Substring:C12($ServerIconPath; 2)
 				End if 
 				
 				var $ServerIconFile : 4D:C1709.File
@@ -1939,7 +1939,7 @@ $buildApplicationType : Text)
 			If ($RuntimeVLIconPath#"")
 				
 				If ([":"; "\\"].includes(Substring:C12($RuntimeVLIconPath; 1; 1)))
-					$RuntimeVLIconPath:=$BuildApp.PROJECT.platformPath+Substring:C12($RuntimeVLIconPath; 2)
+					$RuntimeVLIconPath:=$BuildApp.PROJECT.parent.platformPath+Substring:C12($RuntimeVLIconPath; 2)
 				End if 
 				
 				var $RuntimeVLIconFile : 4D:C1709.File
