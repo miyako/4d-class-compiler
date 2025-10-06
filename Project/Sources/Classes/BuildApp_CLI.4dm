@@ -1794,6 +1794,9 @@ $buildApplicationType : Text)
 	
 	$platform:=(Is macOS:C1572 ? "Mac" : "Win")
 	
+	var $defaultIconPath : Text
+	$defaultIconPath:=$BuildApp.PROJECT.parent.parent.platformPath+$BuildApp.PROJECT_NAME+(Is macOS:C1572 ? ".icns" : ".ico")
+	
 	var $ClientIconFile : 4D:C1709.File
 	
 	Case of 
@@ -1804,12 +1807,7 @@ $buildApplicationType : Text)
 			$ClientMacIconPath:=$CLI._getStringValue($BuildApp; "SourcesFiles.CS."+$ClientMacIconFor___Path)
 			
 			If ($ClientMacIconPath="")
-				Case of 
-					: (Is macOS:C1572)
-						$ClientMacIconPath:=$BuildApp.PROJECT.parent.platformPath+$BuildApp.PROJECT_NAME+".icns"
-					: (Is Windows:C1573)
-						$ClientMacIconPath:=$BuildApp.PROJECT.parent.platformPath+$BuildApp.PROJECT_NAME+".ico"
-				End case 
+				$ClientMacIconPath:=$defaultIconPath
 			End if 
 			
 			If ($ClientMacIconPath#"")
@@ -1845,12 +1843,7 @@ $buildApplicationType : Text)
 			$ClientWinIconPath:=$CLI._getStringValue($BuildApp; "SourcesFiles.CS."+$ClientWinIconFor___Path)
 			
 			If ($ClientWinIconPath="")
-				Case of 
-					: (Is macOS:C1572)
-						$ClientWinIconPath:=$BuildApp.PROJECT.parent.platformPath+$BuildApp.PROJECT_NAME+".icns"
-					: (Is Windows:C1573)
-						$ClientWinIconPath:=$BuildApp.PROJECT.parent.platformPath+$BuildApp.PROJECT_NAME+".ico"
-				End case 
+				$ClientWinIconPath:=$defaultIconPath
 			End if 
 			
 			If ($ClientWinIconPath#"")
@@ -1886,12 +1879,7 @@ $buildApplicationType : Text)
 			$ServerIconPath:=$CLI._getStringValue($BuildApp; "SourcesFiles.CS."+$ServerIcon___Path)
 			
 			If ($ServerIconPath="")
-				Case of 
-					: (Is macOS:C1572)
-						$ServerIconPath:=$BuildApp.PROJECT.parent.platformPath+$BuildApp.PROJECT_NAME+".icns"
-					: (Is Windows:C1573)
-						$ServerIconPath:=$BuildApp.PROJECT.parent.platformPath+$BuildApp.PROJECT_NAME+".ico"
-				End case 
+				$ServerIconPath:=$defaultIconPath
 			End if 
 			
 			If ($ServerIconPath#"")
@@ -1928,12 +1916,7 @@ $buildApplicationType : Text)
 			$RuntimeVLIconPath:=$CLI._getStringValue($BuildApp; "SourcesFiles.RuntimeVL."+$RuntimeVLIcon___Path)
 			
 			If ($RuntimeVLIconPath="")
-				Case of 
-					: (Is macOS:C1572)
-						$RuntimeVLIconPath:=$BuildApp.PROJECT.parent.platformPath+$BuildApp.PROJECT_NAME+".icns"
-					: (Is Windows:C1573)
-						$RuntimeVLIconPath:=$BuildApp.PROJECT.parent.platformPath+$BuildApp.PROJECT_NAME+".ico"
-				End case 
+				$RuntimeVLIconPath:=$defaultIconPath
 			End if 
 			
 			If ($RuntimeVLIconPath#"")
@@ -1964,10 +1947,6 @@ $buildApplicationType : Text)
 					Else 
 						$winInfo.WinIcon:=$RuntimeVLIconFile.path
 						$keys.push("WinIcon")
-						
-						$CLI._printTask("Set WinIcon property")
-						$CLI._printItem($winInfo.WinIcon)
-						
 					End if 
 				End if 
 			End if 
