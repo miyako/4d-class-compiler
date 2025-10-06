@@ -84,7 +84,7 @@ https://developer.4d.com/docs/Admin/cli/#tool4d
 /*
 store environment for later
 */
-				$BuildApp.PROJECT:=$compileProject
+				$buildProject.PROJECT:=$compileProject
 				
 				If ($options.includes("clean"))
 					$CLI.clean($compileProject)
