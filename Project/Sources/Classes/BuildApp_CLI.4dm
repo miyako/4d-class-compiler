@@ -1804,7 +1804,7 @@ $buildApplicationType : Text)
 			
 			If ($ClientMacIconPath#"")
 				
-				If ([":"; "\\\\"].includes(Substring:C12($ClientMacIconPath; 1; 1)))
+				If ([":"; "\\"].includes(Substring:C12($ClientMacIconPath; 1; 1)))
 					$ClientMacIconPath:=$BuildApp.PROJECT.parent.platformPath+Substring:C12($ClientMacIconPath; 2)
 				End if 
 				
@@ -1836,7 +1836,7 @@ $buildApplicationType : Text)
 			
 			If ($ClientWinIconPath#"")
 				
-				If ([":"; "\\\\"].includes(Substring:C12($ClientWinIconPath; 1; 1)))
+				If ([":"; "\\"].includes(Substring:C12($ClientWinIconPath; 1; 1)))
 					$ClientWinIconPath:=$BuildApp.PROJECT.parent.platformPath+Substring:C12($ClientWinIconPath; 2)
 				End if 
 				
@@ -1868,7 +1868,7 @@ $buildApplicationType : Text)
 			
 			If ($ServerIconPath#"")
 				
-				If ([":"; "\\\\"].includes(Substring:C12($ServerIconPath; 1; 1)))
+				If ([":"; "\\"].includes(Substring:C12($ServerIconPath; 1; 1)))
 					$ServerIconPath:=$BuildApp.PROJECT.parent.platformPath+Substring:C12($ServerIconPath; 2)
 				End if 
 				
@@ -1901,8 +1901,14 @@ $buildApplicationType : Text)
 			
 			If ($RuntimeVLIconPath#"")
 				
-				If ([":"; "\\\\"].includes(Substring:C12($RuntimeVLIconPath; 1; 1)))
+				$CLI._printTask("[DEBUG] got icon path")
+				$CLI._printItem($RuntimeVLIconPath)
+				
+				If ([":"; "\\"].includes(Substring:C12($RuntimeVLIconPath; 1; 1)))
 					$RuntimeVLIconPath:=$BuildApp.PROJECT.parent.platformPath+Substring:C12($RuntimeVLIconPath; 2)
+					
+					$CLI._printTask("[DEBUG] expand icon path")
+					$CLI._printItem($RuntimeVLIconPath)
 				End if 
 				
 				var $RuntimeVLIconFile : 4D:C1709.File
