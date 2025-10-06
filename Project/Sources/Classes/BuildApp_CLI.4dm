@@ -73,6 +73,7 @@ Function build($buildProject : 4D:C1709.File; $compileProject : 4D:C1709.File; $
 	$BuildApp:=cs:C1710.BuildApp.new($buildProject)
 	
 	$BuildApp.PROJECT:=$compileProject
+	$BuildApp.PROJECT_NAME:=$compileProject.name
 	
 	$BuildApp.findLicenses()
 	
@@ -1802,10 +1803,19 @@ $buildApplicationType : Text)
 			
 			$ClientMacIconPath:=$CLI._getStringValue($BuildApp; "SourcesFiles.CS."+$ClientMacIconFor___Path)
 			
+			If ($ClientMacIconPath="")
+				Case of 
+					: (Is macOS:C1572)
+						$ClientMacIconPath:=$BuildApp.PROJECT.parent.platformPath+$BuildApp.PROJECT_NAME+".icns"
+					: (Is Windows:C1573)
+						$ClientMacIconPath:=$BuildApp.PROJECT.parent.platformPath+$BuildApp.PROJECT_NAME+".ico"
+				End case 
+			End if 
+			
 			If ($ClientMacIconPath#"")
 				
 				If ([":"; "\\"].includes(Substring:C12($ClientMacIconPath; 1; 1)))
-					$ClientMacIconPath:=$BuildApp.PROJECT.parent.platformPath+Substring:C12($ClientMacIconPath; 2)
+					$ClientMacIconPath:=$BuildApp.PROJECT.platformPath+Substring:C12($ClientMacIconPath; 2)
 				End if 
 				
 				$ClientIconFile:=File:C1566($ClientMacIconPath; fk platform path:K87:2)
@@ -1834,10 +1844,19 @@ $buildApplicationType : Text)
 			
 			$ClientWinIconPath:=$CLI._getStringValue($BuildApp; "SourcesFiles.CS."+$ClientWinIconFor___Path)
 			
+			If ($ClientWinIconPath="")
+				Case of 
+					: (Is macOS:C1572)
+						$ClientWinIconPath:=$BuildApp.PROJECT.parent.platformPath+$BuildApp.PROJECT_NAME+".icns"
+					: (Is Windows:C1573)
+						$ClientWinIconPath:=$BuildApp.PROJECT.parent.platformPath+$BuildApp.PROJECT_NAME+".ico"
+				End case 
+			End if 
+			
 			If ($ClientWinIconPath#"")
 				
 				If ([":"; "\\"].includes(Substring:C12($ClientWinIconPath; 1; 1)))
-					$ClientWinIconPath:=$BuildApp.PROJECT.parent.platformPath+Substring:C12($ClientWinIconPath; 2)
+					$ClientWinIconPath:=$BuildApp.PROJECT.platformPath+Substring:C12($ClientWinIconPath; 2)
 				End if 
 				
 				$ClientIconFile:=File:C1566($ClientWinIconPath; fk platform path:K87:2)
@@ -1866,10 +1885,19 @@ $buildApplicationType : Text)
 			
 			$ServerIconPath:=$CLI._getStringValue($BuildApp; "SourcesFiles.CS."+$ServerIcon___Path)
 			
+			If ($ServerIconPath="")
+				Case of 
+					: (Is macOS:C1572)
+						$ServerIconPath:=$BuildApp.PROJECT.parent.platformPath+$BuildApp.PROJECT_NAME+".icns"
+					: (Is Windows:C1573)
+						$ServerIconPath:=$BuildApp.PROJECT.parent.platformPath+$BuildApp.PROJECT_NAME+".ico"
+				End case 
+			End if 
+			
 			If ($ServerIconPath#"")
 				
 				If ([":"; "\\"].includes(Substring:C12($ServerIconPath; 1; 1)))
-					$ServerIconPath:=$BuildApp.PROJECT.parent.platformPath+Substring:C12($ServerIconPath; 2)
+					$ServerIconPath:=$BuildApp.PROJECT.platformPath+Substring:C12($ServerIconPath; 2)
 				End if 
 				
 				var $ServerIconFile : 4D:C1709.File
@@ -1899,16 +1927,19 @@ $buildApplicationType : Text)
 			
 			$RuntimeVLIconPath:=$CLI._getStringValue($BuildApp; "SourcesFiles.RuntimeVL."+$RuntimeVLIcon___Path)
 			
+			If ($RuntimeVLIconPath="")
+				Case of 
+					: (Is macOS:C1572)
+						$RuntimeVLIconPath:=$BuildApp.PROJECT.parent.platformPath+$BuildApp.PROJECT_NAME+".icns"
+					: (Is Windows:C1573)
+						$RuntimeVLIconPath:=$BuildApp.PROJECT.parent.platformPath+$BuildApp.PROJECT_NAME+".ico"
+				End case 
+			End if 
+			
 			If ($RuntimeVLIconPath#"")
 				
-				$CLI._printTask("[DEBUG] got icon path")
-				$CLI._printItem($RuntimeVLIconPath)
-				
 				If ([":"; "\\"].includes(Substring:C12($RuntimeVLIconPath; 1; 1)))
-					$RuntimeVLIconPath:=$BuildApp.PROJECT.parent.platformPath+Substring:C12($RuntimeVLIconPath; 2)
-					
-					$CLI._printTask("[DEBUG] expand icon path")
-					$CLI._printItem($RuntimeVLIconPath)
+					$RuntimeVLIconPath:=$BuildApp.PROJECT.platformPath+Substring:C12($RuntimeVLIconPath; 2)
 				End if 
 				
 				var $RuntimeVLIconFile : 4D:C1709.File
