@@ -1,7 +1,7 @@
 //%attributes = {"invisible":true}
 #DECLARE($mode : Text)
 
-If (Get application info:C1599.headless)
+If (Application info:C1599.headless)
 	
 /*
 	
@@ -80,6 +80,11 @@ https://developer.4d.com/docs/Admin/cli/#tool4d
 			End for each 
 			
 			If ($compileProject#Null:C1517)
+				
+/*
+store environment for later
+*/
+				$BuildApp.PROJECT:=$compileProject
 				
 				If ($options.includes("clean"))
 					$CLI.clean($compileProject)

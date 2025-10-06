@@ -823,16 +823,7 @@ $buildApplicationType : Text)
 						$CLI._printTask("Copy database folders").LF()
 						For each ($folder; $folders)
 							If ($folder.exists)
-								
-								If ($PackProject)
-									$CLI._printPath($folder.copyTo($ContentsFolder))
-								Else 
-									If ($folder.name="Default Data")
-										$CLI._printPath($folder.copyTo($ContentsFolder))
-									Else 
-										$CLI._printPath($folder.copyTo($ContentsFolder.folder("Project")))
-									End if 
-								End if 
+								$CLI._printPath($folder.copyTo($ContentsFolder))
 							End if 
 						End for each 
 						
@@ -1808,6 +1799,11 @@ $sdi_application : Boolean; $publication_name : Text; $buildApplicationType : Te
 			$ClientMacIconPath:=$CLI._getStringValue($BuildApp; "SourcesFiles.CS."+$ClientMacIconFor___Path)
 			
 			If ($ClientMacIconPath#"")
+				
+				If ([":"; "//"].includes(Substring:C12($ClientMacIconPath; 1; 1)))
+					$ClientMacIconPath:=$BuildApp.PROJECT.parent.platformPath+Substring:C12($ClientMacIconPath; 2)
+				End if 
+				
 				$ClientIconFile:=File:C1566($ClientMacIconPath; fk platform path:K87:2)
 				If ($ClientIconFile.exists)
 					If (Is macOS:C1572)
@@ -1835,6 +1831,11 @@ $sdi_application : Boolean; $publication_name : Text; $buildApplicationType : Te
 			$ClientWinIconPath:=$CLI._getStringValue($BuildApp; "SourcesFiles.CS."+$ClientWinIconFor___Path)
 			
 			If ($ClientWinIconPath#"")
+				
+				If ([":"; "//"].includes(Substring:C12($ClientWinIconPath; 1; 1)))
+					$ClientWinIconPath:=$BuildApp.PROJECT.parent.platformPath+Substring:C12($ClientWinIconPath; 2)
+				End if 
+				
 				$ClientIconFile:=File:C1566($ClientWinIconPath; fk platform path:K87:2)
 				If ($ClientIconFile.exists)
 					If (Is macOS:C1572)
@@ -1862,6 +1863,11 @@ $sdi_application : Boolean; $publication_name : Text; $buildApplicationType : Te
 			$ServerIconPath:=$CLI._getStringValue($BuildApp; "SourcesFiles.CS."+$ServerIcon___Path)
 			
 			If ($ServerIconPath#"")
+				
+				If ([":"; "//"].includes(Substring:C12($ServerIconPath; 1; 1)))
+					$ServerIconPath:=$BuildApp.PROJECT.parent.platformPath+Substring:C12($ServerIconPath; 2)
+				End if 
+				
 				var $ServerIconFile : 4D:C1709.File
 				$ServerIconFile:=File:C1566($ServerIconPath; fk platform path:K87:2)
 				If ($ServerIconFile.exists)
@@ -1890,6 +1896,11 @@ $sdi_application : Boolean; $publication_name : Text; $buildApplicationType : Te
 			$RuntimeVLIconPath:=$CLI._getStringValue($BuildApp; "SourcesFiles.RuntimeVL."+$RuntimeVLIcon___Path)
 			
 			If ($RuntimeVLIconPath#"")
+				
+				If ([":"; "//"].includes(Substring:C12($RuntimeVLIconPath; 1; 1)))
+					$RuntimeVLIconPath:=$BuildApp.PROJECT.parent.platformPath+Substring:C12($RuntimeVLIconPath; 2)
+				End if 
+				
 				var $RuntimeVLIconFile : 4D:C1709.File
 				$RuntimeVLIconFile:=File:C1566($RuntimeVLIconPath; fk platform path:K87:2)
 				If ($RuntimeVLIconFile.exists)
