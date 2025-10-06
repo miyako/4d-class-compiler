@@ -1536,7 +1536,9 @@ Function _updateProperty($BuildApp : cs:C1710.BuildApp; \
 $targetRuntimeFolder : 4D:C1709.Folder; \
 $CompanyName : Text; \
 $BuildApplicationName : Text; \
-$sdi_application : Boolean; $publication_name : Text; $buildApplicationType : Text)
+$sdi_application : Boolean; \
+$publication_name : Text; \
+$buildApplicationType : Text)
 	
 	$CLI:=This:C1470
 	
@@ -1802,7 +1804,7 @@ $sdi_application : Boolean; $publication_name : Text; $buildApplicationType : Te
 			
 			If ($ClientMacIconPath#"")
 				
-				If ([":"; "//"].includes(Substring:C12($ClientMacIconPath; 1; 1)))
+				If ([":"; "\\\\"].includes(Substring:C12($ClientMacIconPath; 1; 1)))
 					$ClientMacIconPath:=$BuildApp.PROJECT.parent.platformPath+Substring:C12($ClientMacIconPath; 2)
 				End if 
 				
@@ -1834,7 +1836,7 @@ $sdi_application : Boolean; $publication_name : Text; $buildApplicationType : Te
 			
 			If ($ClientWinIconPath#"")
 				
-				If ([":"; "//"].includes(Substring:C12($ClientWinIconPath; 1; 1)))
+				If ([":"; "\\\\"].includes(Substring:C12($ClientWinIconPath; 1; 1)))
 					$ClientWinIconPath:=$BuildApp.PROJECT.parent.platformPath+Substring:C12($ClientWinIconPath; 2)
 				End if 
 				
@@ -1866,7 +1868,7 @@ $sdi_application : Boolean; $publication_name : Text; $buildApplicationType : Te
 			
 			If ($ServerIconPath#"")
 				
-				If ([":"; "//"].includes(Substring:C12($ServerIconPath; 1; 1)))
+				If ([":"; "\\\\"].includes(Substring:C12($ServerIconPath; 1; 1)))
 					$ServerIconPath:=$BuildApp.PROJECT.parent.platformPath+Substring:C12($ServerIconPath; 2)
 				End if 
 				
@@ -1899,7 +1901,7 @@ $sdi_application : Boolean; $publication_name : Text; $buildApplicationType : Te
 			
 			If ($RuntimeVLIconPath#"")
 				
-				If ([":"; "//"].includes(Substring:C12($RuntimeVLIconPath; 1; 1)))
+				If ([":"; "\\\\"].includes(Substring:C12($RuntimeVLIconPath; 1; 1)))
 					$RuntimeVLIconPath:=$BuildApp.PROJECT.parent.platformPath+Substring:C12($RuntimeVLIconPath; 2)
 				End if 
 				
