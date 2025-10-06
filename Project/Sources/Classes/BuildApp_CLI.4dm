@@ -72,6 +72,8 @@ Function build($buildProject : 4D:C1709.File; $compileProject : 4D:C1709.File; $
 	
 	$BuildApp:=cs:C1710.BuildApp.new($buildProject)
 	
+	$BuildApp.PROJECT:=$compileProject
+	
 	$BuildApp.findLicenses()
 	
 	var $BuildApplicationName; $CompanyName : Text

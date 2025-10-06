@@ -81,11 +81,6 @@ https://developer.4d.com/docs/Admin/cli/#tool4d
 			
 			If ($compileProject#Null:C1517)
 				
-/*
-store environment for later
-*/
-				$buildProject.PROJECT:=$compileProject
-				
 				If ($options.includes("clean"))
 					$CLI.clean($compileProject)
 				End if 
