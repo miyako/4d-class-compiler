@@ -1944,6 +1944,11 @@ $buildApplicationType : Text)
 				
 				var $RuntimeVLIconFile : 4D:C1709.File
 				$RuntimeVLIconFile:=File:C1566($RuntimeVLIconPath; fk platform path:K87:2)
+				
+				$CLI._printTask("Set icon file")
+				$CLI._printStatus($RuntimeVLIconFile.exists)
+				$CLI._printPath($RuntimeVLIconFile)
+				
 				If ($RuntimeVLIconFile.exists)
 					If (Is macOS:C1572)
 						$targetIconFile:=$RuntimeVLIconFile.copyTo($targetRuntimeFolder.folder("Contents").folder("Resources"); fk overwrite:K87:5)
@@ -1959,6 +1964,10 @@ $buildApplicationType : Text)
 					Else 
 						$winInfo.WinIcon:=$RuntimeVLIconFile.path
 						$keys.push("WinIcon")
+						
+						$CLI._printTask("Set WinIcon property")
+						$CLI._printItem($winInfo.WinIcon)
+						
 					End if 
 				End if 
 			End if 
@@ -2108,6 +2117,9 @@ $buildApplicationType : Text)
 	
 	If (Is Windows:C1573)
 		$targetRuntimeFolder.file($BuildApplicationName+".exe").setAppInfo($winInfo)
+		$CLI._printTask("Set app info")
+		$CLI._printList(OB Keys:C1719($winInfo))
+		$CLI._printPath($targetRuntimeFolder.file($BuildApplicationName+".exe"))
 	End if 
 	
 	$CLI._updatePropertyStrings($BuildApp; $targetRuntimeFolder; $info)
