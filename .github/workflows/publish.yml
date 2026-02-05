@@ -61,7 +61,7 @@ jobs:
           rm -rf Settings/buildApp.4DSettings
           rm -rf Project/DerivedData
           rm -rf userPreferences.*
-          ditto -c -k --keepParent . "${zip_path}"
+          ditto -c -k --keepParent --sequesterRsrc . "${zip_path}"
         env: 
           folder_path: Project
           zip_path: 4d-class-compiler.zip
