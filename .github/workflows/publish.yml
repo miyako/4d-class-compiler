@@ -54,14 +54,14 @@ jobs:
           rm -rf assets
           rm -rf Data
           rm -rf Libraries
+          rm -f  LICENSE
           rm -rf Documentation
           rm -f  package.json
           rm -f  README.md
-          rm -f  4d-class-compiler.zip
           rm -rf Settings/buildApp.4DSettings
           rm -rf Project/DerivedData
           rm -rf userPreferences.*
-          ditto -c -k . "${zip_path}"
+          ditto -c -k --keepParent . "${zip_path}"
         env: 
           folder_path: Project
           zip_path: 4d-class-compiler.zip
