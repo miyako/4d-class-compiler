@@ -79,13 +79,14 @@ jobs:
           prerelease: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    
-      - name: upload zip
-        uses: actions/upload-release-asset@v1
-        with:
-          upload_url: ${{ steps.release.outputs.upload_url }}
-          asset_path: ${{ steps.zip.outputs.asset_path }}
-          asset_name: ${{ steps.zip.outputs.asset_name }}
-          asset_content_type: application/zip
+      
+      - name: upload assets
+        id: upload
+        uses: miyako/4D/.github/actions/deployment-release-assets@v1
+        with: 
+          dmg_path: ${{ steps.zip.outputs.dmg_path }}
+          zip_path: ${{ steps.zip.outputs.zip_path }}    
+          tag_name: ${{ steps.version.outputs.version }}   
+          release_name: ${{ steps.version.outputs.version }}  
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
