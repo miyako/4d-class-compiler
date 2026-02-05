@@ -1647,14 +1647,14 @@ $buildApplicationType : Text)
 	
 	If ($EvaluationMode)
 		$CLI._printTask("Set Evaluation Key")
-		$license:=This:C1470.licenseKey
+		$license:=String:C10(License info:C1489.licenseNumber)
 		$license:=Substring:C12($license; $license="R-@" ? 3 : 1)
 		$license:=Insert string:C231($license; "-"; 8)
 		$license:=Insert string:C231($license; "-"; 15)
 		$license:=Insert string:C231($license; "-"; 21)
 		$license:=Change string:C234($license; "XXXXXX-XXXXX-XXX"; 9)
 		$CLI._printItem($license)
-		$info["com.4D.BuildApp.EvaluationKey"]:=This:C1470.licenseKey
+		$info["com.4D.BuildApp.EvaluationKey"]:=$license
 		$keys.push("com.4D.BuildApp.EvaluationKey")
 		If ($EvaluationName#"")
 			$CLI._printTask("Set Evaluation Name")
