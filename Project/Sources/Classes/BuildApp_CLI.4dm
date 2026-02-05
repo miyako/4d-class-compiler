@@ -1829,10 +1829,12 @@ $buildApplicationType : Text)
 						$info.CFBundleIconFile:=$targetIconFile.name
 						$keys.push("CFBundleIconFile")
 						$keys.push("CFBundleIconName")
-						$targetIconFile:=$ClientIconFile.copyTo($targetRuntimeFolder.folder("Contents").folder("Resources").folder("Images").folder("WindowIcons"); "windowIcon_205.icns"; fk overwrite:K87:5)
-						$CLI._printTask("Copy icon file")
-						$CLI._printStatus($targetIconFile.exists)
-						$CLI._printPath($targetIconFile)
+						If (Test path name:C476($ClientMacIconPath)=Is a document:K24:1)
+							$targetIconFile:=$ClientIconFile.copyTo($targetRuntimeFolder.folder("Contents").folder("Resources").folder("Images").folder("WindowIcons"); "windowIcon_205.icns"; fk overwrite:K87:5)
+							$CLI._printTask("Copy icon file")
+							$CLI._printStatus($targetIconFile.exists)
+							$CLI._printPath($targetIconFile)
+						End if 
 					Else 
 						$winInfo.WinIcon:=$ClientIconFile.path
 						$keys.push("WinIcon")
@@ -1871,10 +1873,12 @@ $buildApplicationType : Text)
 						$info.CFBundleIconFile:=$targetIconFile.name
 						$keys.push("CFBundleIconFile")
 						$keys.push("CFBundleIconName")
-						$targetIconFile:=$ClientIconFile.copyTo($targetRuntimeFolder.folder("Contents").folder("Resources").folder("Images").folder("WindowIcons"); "windowIcon_205.icns"; fk overwrite:K87:5)
-						$CLI._printTask("Copy icon file")
-						$CLI._printStatus($targetIconFile.exists)
-						$CLI._printPath($targetIconFile)
+						If (Test path name:C476($ClientWinIconPath)=Is a document:K24:1)
+							$targetIconFile:=$ClientIconFile.copyTo($targetRuntimeFolder.folder("Contents").folder("Resources").folder("Images").folder("WindowIcons"); "windowIcon_205.icns"; fk overwrite:K87:5)
+							$CLI._printTask("Copy icon file")
+							$CLI._printStatus($targetIconFile.exists)
+							$CLI._printPath($targetIconFile)
+						End if 
 					Else 
 						$winInfo.WinIcon:=$ClientIconFile.path
 						$keys.push("WinIcon")
@@ -1914,10 +1918,12 @@ $buildApplicationType : Text)
 						$info.CFBundleIconFile:=$targetIconFile.name
 						$keys.push("CFBundleIconFile")
 						$keys.push("CFBundleIconName")
-						$targetIconFile:=$ServerIconFile.copyTo($targetRuntimeFolder.folder("Contents").folder("Resources").folder("Images").folder("WindowIcons"); "windowIcon_205.icns"; fk overwrite:K87:5)
-						$CLI._printTask("Copy icon file")
-						$CLI._printStatus($targetIconFile.exists)
-						$CLI._printPath($targetIconFile)
+						If (Test path name:C476($ServerIconPath)=Is a document:K24:1)
+							$targetIconFile:=$ServerIconFile.copyTo($targetRuntimeFolder.folder("Contents").folder("Resources").folder("Images").folder("WindowIcons"); "windowIcon_205.icns"; fk overwrite:K87:5)
+							$CLI._printTask("Copy icon file")
+							$CLI._printStatus($targetIconFile.exists)
+							$CLI._printPath($targetIconFile)
+						End if 
 					Else 
 						$winInfo.WinIcon:=$ServerIconFile.path
 						$keys.push("WinIcon")
@@ -1961,10 +1967,12 @@ $buildApplicationType : Text)
 						$info.CFBundleIconFile:=$targetIconFile.name
 						$keys.push("CFBundleIconFile")
 						$keys.push("CFBundleIconName")
-						$targetIconFile:=$RuntimeVLIconFile.copyTo($targetRuntimeFolder.folder("Contents").folder("Resources").folder("Images").folder("WindowIcons"); "windowIcon_205.icns"; fk overwrite:K87:5)
-						$CLI._printTask("Copy icon file")
-						$CLI._printStatus($targetIconFile.exists)
-						$CLI._printPath($targetIconFile)
+						If (Test path name:C476($RuntimeVLIconPath)=Is a document:K24:1)
+							$targetIconFile:=$RuntimeVLIconFile.copyTo($targetRuntimeFolder.folder("Contents").folder("Resources").folder("Images").folder("WindowIcons"); "windowIcon_205.icns"; fk overwrite:K87:5)
+							$CLI._printTask("Copy icon file")
+							$CLI._printStatus($targetIconFile.exists)
+							$CLI._printPath($targetIconFile)
+						End if 
 					Else 
 						$winInfo.WinIcon:=$RuntimeVLIconFile.path
 						$keys.push("WinIcon")
