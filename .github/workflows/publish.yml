@@ -57,7 +57,7 @@ jobs:
           rm -rf Settings/buildApp.4DSettings
           rm -rf Project/DerivedData
           rm -rf userPreferences.*
-          ditto -c -k "${folder_path}" "${zip_path}"
+          ditto -c -k . "${zip_path}"
         env: 
           folder_path: Project
           zip_path: 4d-class-compiler.zip
