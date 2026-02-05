@@ -239,10 +239,8 @@ Function build($buildProject : 4D:C1709.File; $compileProject : 4D:C1709.File; $
 						If ($serverRuntimePath#"")
 							$ServerFolderPath:=$serverRuntimePath
 						Else 
-							$ServerFolderPath:=$CLI._getStringValue($BuildApp; "SourcesFiles.RuntimeVL."+$RuntimeVL___Folder)
+							$ServerFolderPath:=$CLI._getStringValue($BuildApp; "SourcesFiles.CS."+$Server___Folder)
 						End if 
-						
-						$ServerFolderPath:=$CLI._getStringValue($BuildApp; "SourcesFiles.CS."+$Server___Folder)
 						
 						If ($ServerFolderPath#"")
 							
