@@ -1797,7 +1797,7 @@ $buildApplicationType : Text)
 	var $defaultIconPath : Text
 	$defaultIconPath:=$BuildApp.PROJECT.parent.parent.platformPath+$BuildApp.PROJECT_NAME+(Is macOS:C1572 ? ".icns" : ".ico")
 	
-	var $ClientIconFile : 4D:C1709.File
+	var $ClientIconFile : Object
 	
 	Case of 
 		: ($buildApplicationType="ClientMac")
@@ -1816,7 +1816,12 @@ $buildApplicationType : Text)
 					$ClientMacIconPath:=$BuildApp.PROJECT.parent.parent.platformPath+Substring:C12($ClientMacIconPath; 2)
 				End if 
 				
-				$ClientIconFile:=File:C1566($ClientMacIconPath; fk platform path:K87:2)
+				If (Test path name:C476($ClientMacIconPath)=Is a document:K24:1)
+					$ClientIconFile:=File:C1566($ClientMacIconPath; fk platform path:K87:2)
+				Else 
+					$ClientIconFile:=Folder:C1567($ClientMacIconPath; fk platform path:K87:2)
+				End if 
+				
 				If ($ClientIconFile.exists)
 					If (Is macOS:C1572)
 						$targetIconFile:=$ClientIconFile.copyTo($targetRuntimeFolder.folder("Contents").folder("Resources"); fk overwrite:K87:5)
@@ -1853,7 +1858,12 @@ $buildApplicationType : Text)
 					$ClientWinIconPath:=$BuildApp.PROJECT.parent.parent.platformPath+Substring:C12($ClientWinIconPath; 2)
 				End if 
 				
-				$ClientIconFile:=File:C1566($ClientWinIconPath; fk platform path:K87:2)
+				If (Test path name:C476($ClientWinIconPath)=Is a document:K24:1)
+					$ClientIconFile:=File:C1566($ClientWinIconPath; fk platform path:K87:2)
+				Else 
+					$ClientIconFile:=Folder:C1567($ClientWinIconPath; fk platform path:K87:2)
+				End if 
+				
 				If ($ClientIconFile.exists)
 					If (Is macOS:C1572)
 						$targetIconFile:=$ClientIconFile.copyTo($targetRuntimeFolder.folder("Contents").folder("Resources"); fk overwrite:K87:5)
@@ -1890,8 +1900,13 @@ $buildApplicationType : Text)
 					$ServerIconPath:=$BuildApp.PROJECT.parent.parent.platformPath+Substring:C12($ServerIconPath; 2)
 				End if 
 				
-				var $ServerIconFile : 4D:C1709.File
-				$ServerIconFile:=File:C1566($ServerIconPath; fk platform path:K87:2)
+				var $ServerIconFile : Object
+				If (Test path name:C476($ServerIconPath)=Is a document:K24:1)
+					$ServerIconFile:=File:C1566($ServerIconPath; fk platform path:K87:2)
+				Else 
+					$ServerIconFile:=Folder:C1567($ServerIconPath; fk platform path:K87:2)
+				End if 
+				
 				If ($ServerIconFile.exists)
 					If (Is macOS:C1572)
 						$targetIconFile:=$ServerIconFile.copyTo($targetRuntimeFolder.folder("Contents").folder("Resources"); fk overwrite:K87:5)
@@ -1928,8 +1943,12 @@ $buildApplicationType : Text)
 					$RuntimeVLIconPath:=$BuildApp.PROJECT.parent.parent.platformPath+Substring:C12($RuntimeVLIconPath; 2)
 				End if 
 				
-				var $RuntimeVLIconFile : 4D:C1709.File
-				$RuntimeVLIconFile:=File:C1566($RuntimeVLIconPath; fk platform path:K87:2)
+				var $RuntimeVLIconFile : Object
+				If (Test path name:C476($RuntimeVLIconPath)=Is a document:K24:1)
+					$RuntimeVLIconFile:=File:C1566($RuntimeVLIconPath; fk platform path:K87:2)
+				Else 
+					$RuntimeVLIconFile:=Folder:C1567($RuntimeVLIconPath; fk platform path:K87:2)
+				End if 
 				
 				$CLI._printTask("Set icon file")
 				$CLI._printStatus($RuntimeVLIconFile.exists)
