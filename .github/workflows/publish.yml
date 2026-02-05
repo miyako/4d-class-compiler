@@ -57,14 +57,13 @@ jobs:
           rm -rf Settings/buildApp.4DSettings
           rm -rf Project/DerivedData
           rm -rf userPreferences.*
-          rm -f  ${zip_path}
 
       - name: zip
         id: zip
         uses: miyako/4D/.github/actions/deployment-create-zip@v1
         with: 
-          dmg_path: 4d-class-compiler/Project/4d-class-compiler.dmg
-          zip_path: 4d-class-compiler/Project/4d-class-compiler.zip
+          dmg_path: Project/4d-class-compiler.dmg
+          zip_path: Project/4d-class-compiler.zip
       
       - name: List contents of output
         run: ls -lh .
