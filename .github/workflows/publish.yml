@@ -54,6 +54,10 @@ jobs:
           rm -rf assets
           rm -rf Data
           rm -rf Libraries
+          rm -rf Documentation
+          rm -f  package.json
+          rm -f  README.md
+          rm -f  4d-class-compiler.zip
           rm -rf Settings/buildApp.4DSettings
           rm -rf Project/DerivedData
           rm -rf userPreferences.*
