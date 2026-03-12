@@ -614,7 +614,7 @@ $buildApplicationType : Text)
 					
 					$CLI._printTask("Copy startup project").LF()
 					
-					$folders:=$startupProjectFolder.folders(fk ignore invisible:K87:22).query("name in :1"; New collection:C1472("Components"; "Resources"; "Libraries"; "Extras"))
+					$folders:=$startupProjectFolder.folders(fk ignore invisible:K87:22).query("name in :1"; New collection:C1472("Components"; "Resources"; "Libraries"; "Extras"; "Macros v2"))
 					
 					For each ($folder; $folders)
 						If ($folder.exists)
@@ -706,7 +706,7 @@ $buildApplicationType : Text)
 					
 					$CLI._printTask("Copy compiled mac project").LF()
 					
-					$folders:=$MacProjectFolder.folders(fk ignore invisible:K87:22).query("name in :1"; New collection:C1472("Components"; "Resources"; "Libraries"; "Extras"))
+					$folders:=$MacProjectFolder.folders(fk ignore invisible:K87:22).query("name in :1"; New collection:C1472("Components"; "Resources"; "Libraries"; "Extras"; "Macros v2"))
 					
 					For each ($folder; $folders)
 						$targetProjectFolder:=$folder.copyTo($ContentsFolder)
@@ -817,7 +817,7 @@ $buildApplicationType : Text)
 						
 					End if 
 					
-					$folders:=$ProjectFolder.parent.folders(fk ignore invisible:K87:22).query("name in :1"; New collection:C1472("Resources"; "Libraries"; "Default Data"; "Extras"; "Documentation"))
+					$folders:=$ProjectFolder.parent.folders(fk ignore invisible:K87:22).query("name in :1"; New collection:C1472("Resources"; "Libraries"; "Macros v2"; "Default Data"; "Extras"; "Documentation"))
 					
 					If ($folders.length#0)
 						
